@@ -81,15 +81,15 @@
 
     <section id="portfolio" class="px-8 md:px-20 max-w-7xl mx-auto my-48">
         <div class="mb-24 reveal text-center md:text-left">
-            <h2 class="text-4xl font-bold tracking-tighter italic uppercase text-white/95">Najlepsze Realizacje</h2>
-            <p class="text-gray-500 text-[10px] font-black mt-4 tracking-[0.4em] uppercase">Twoja nowa jakość contentu zaczyna się tutaj</p>
+            <h2 class="text-4xl font-bold tracking-tighter italic uppercase text-white/95">Najlepsze Animacje</h2>
+            <p class="text-gray-500 text-[10px] font-black mt-4 tracking-[0.4em] uppercase">Twoja nowa jakość filmu zaczyna się tutaj</p>
             <div class="h-[1px] bg-white/5 w-full mt-12"></div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12" id="portfolio-grid"></div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mt-12" id="library-section" style="display:none;"></div>
         <div class="flex justify-center mt-28 reveal" id="load-more-container">
             <button onclick="showMore()" class="bg-white/5 hover:bg-white/10 border border-white/10 px-14 py-6 rounded-full text-[11px] font-black uppercase tracking-[0.4em] transition-all flex items-center gap-5 text-white">
-                <span>Odkryj bibliotekę projektów</span>
+                <span>Odkryj bibliotekę animacji</span>
                 <span style="font-size: 14px;">&#x25BC;</span>
             </button>
         </div>
@@ -106,7 +106,7 @@
                     <div id="modal-initial-state">
                         <h2 id="modal-proj-title" class="text-3xl font-bold italic uppercase tracking-tighter mb-4 text-white">Tytuł</h2>
                         <div class="chart-container mb-6 bg-white/5 p-4 rounded-3xl border border-white/5">
-                            <span class="text-[9px] text-gray-500 uppercase tracking-widest block text-center mb-2 italic">Zainteresowanie projektem (7 dni)</span>
+                            <span class="text-[9px] text-gray-500 uppercase tracking-widest block text-center mb-2 italic">Zainteresowanie animacja (7 dni)</span>
                             <canvas id="projectChart"></canvas>
                         </div>
                         
@@ -122,7 +122,7 @@
 
                         <div class="space-y-3 mb-8">
                             <div class="flex justify-between items-center bg-white/5 p-5 rounded-2xl border border-white/10">
-                                <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">Wypożyczenie (30 dni)</span>
+                                <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">Wypożyczenie (3 użycia)</span>
                                 <div class="text-right">
                                     <span id="rent-old-price" class="text-xs text-gray-600 line-through mr-2 hidden"></span>
                                     <span id="rent-price" class="text-xl font-bold text-white italic">-- PLN</span>
