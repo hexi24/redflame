@@ -6,14 +6,14 @@
     <title>redflame - Premium MOGRT Assets</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         :root { 
-            --bg-base: #000000;
-            --glass-bg: rgba(10, 10, 10, 0.6);
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --bg-base: #030303;
             --accent-red: #ff1a1a;
+            --glass-bg: rgba(25, 25, 25, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.06);
         }
         
         body { 
@@ -25,372 +25,721 @@
 
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-base); }
-        ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; border: 1px solid rgba(255,26,26,0.2); }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--accent-red); }
 
-        .aurora-bg {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -2; overflow: hidden; background: #000;
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* DELIKATNY CZERWONY GRADIENT W TLE */
+        .ambient-glow {
+            position: fixed;
+            top: -20%; left: 50%;
+            transform: translateX(-50%);
+            width: 100vw; height: 100vh;
+            background: radial-gradient(ellipse at top, rgba(255, 26, 26, 0.05) 0%, transparent 70%);
+            z-index: -2;
+            pointer-events: none;
         }
-        .blob {
-            position: absolute; border-radius: 50%; filter: blur(140px);
-            opacity: 0.35; animation: float 15s infinite alternate ease-in-out;
+
+        /* BIAŁE ROZJAŚNIENIE I KRATKA NA WSTĘPIE */
+        .hero-bg-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(ellipse at top, black 10%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at top, black 10%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
         }
-        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle, #800000, transparent 70%); }
-        .blob-2 { bottom: -20%; right: -10%; width: 60vw; height: 60vw; background: radial-gradient(circle, #ff000022, transparent 70%); animation-delay: -5s; }
+
+        .hero-white-glow {
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 100vw; height: 800px;
+            background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.04) 0%, transparent 60%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* APPLE GLASS UI */
+        .apple-glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
         
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(5%, 10%) scale(1.1); }
+        .apple-glass-hover:hover {
+            border-color: rgba(255, 26, 26, 0.3);
+            background: rgba(40, 20, 20, 0.5);
+            box-shadow: 0 15px 35px -5px rgba(255, 26, 26, 0.15);
+            transform: translateY(-4px);
         }
 
-        .dot-pattern {
-            position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.3;
-            background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
-            background-size: 32px 32px;
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white; font-weight: 500;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+        }
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
-        .glass {
-            background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--glass-border); border-radius: 20px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+        .btn-primary {
+            background: var(--accent-red);
+            color: white; font-weight: 600;
+            border-radius: 9999px;
+            border: 1px solid rgba(255, 100, 100, 0.5);
+            box-shadow: 0 0 20px rgba(255, 26, 26, 0.2);
+            transition: all 0.3s ease;
         }
-
-        .btn-premium {
-            background: linear-gradient(135deg, #ff1a1a 0%, #b30000 100%);
-            color: white; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em;
-            border-radius: 9999px; border: 1px solid rgba(255,100,100,0.4);
-            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.2);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .btn-premium:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(255, 0, 0, 0.6), inset 0 1px 0 rgba(255,255,255,0.4);
-            background: linear-gradient(135deg, #ff3333 0%, #e60000 100%);
-        }
-
-        .text-gradient {
-            background: linear-gradient(to right, #ffffff, #888888);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        .btn-primary:hover {
+            background: #e60000;
+            box-shadow: 0 0 30px rgba(255, 26, 26, 0.4);
+            transform: scale(1.02);
         }
 
         .modal-scale-enter { animation: modalPop 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         @keyframes modalPop { 0% { opacity: 0; transform: scale(0.95) translateY(20px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
-        .fade-in { animation: fadeIn 0.3s ease forwards; }
+        
+        .fade-in { animation: fadeIn 0.4s ease forwards; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* SCROLL REVEAL ANIMATION */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* INFINITE MARQUEE SCROLL (Slower) */
+        .marquee-wrapper {
+            display: flex;
+            overflow: hidden;
+            user-select: none;
+            gap: 2rem;
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+        
+        .marquee-content {
+            display: flex;
+            flex-shrink: 0;
+            gap: 2rem;
+            min-width: 100%;
+        }
+
+        /* Mocno spowolniona lista */
+        .marquee-content-slow {
+            animation: scroll-left 100s linear infinite;
+        }
+
+        .marquee-wrapper:hover .marquee-content {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-100% - 2rem)); }
+        }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased selection:bg-red-500/30">
 
-    <div class="aurora-bg"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
-    <div class="dot-pattern"></div>
+    <div class="ambient-glow"></div>
 
-    <div id="adminBadge" class="hidden bg-red-600/95 backdrop-blur-md text-white text-center text-xs font-black py-2 tracking-[0.2em] uppercase sticky top-0 z-[200] border-b border-red-400/50 shadow-[0_10px_30px_rgba(255,0,0,0.3)] flex justify-center items-center gap-2">
-        <i class="ph-bold ph-shield-check text-xl"></i> JESTEŚ W TRYBIE ADMINISTRATORA
+    <div id="adminBadge" class="hidden bg-red-600/95 backdrop-blur-md text-white text-center text-xs font-bold py-2 uppercase sticky top-0 z-[200] border-b border-red-400/50 flex justify-center items-center gap-2">
+        <i class="ph-fill ph-shield-check text-lg"></i> TRYB ADMINISTRATORA
     </div>
-    <div id="passBadge" class="hidden bg-green-600/95 backdrop-blur-md text-white text-center text-xs font-black py-2 tracking-[0.2em] uppercase sticky top-0 z-[200] border-b border-green-400/50 shadow-[0_10px_30px_rgba(34,197,94,0.3)] flex justify-center items-center gap-2">
-        <i class="ph-bold ph-crown text-xl"></i> EVENT PASS AKTYWNY | POZOSTAŁO UŻYĆ: <span id="passUsesCount">3</span>/3
+    <div id="passBadge" class="hidden bg-green-600/95 backdrop-blur-md text-white text-center text-xs font-bold py-2 uppercase sticky top-0 z-[200] border-b border-green-400/50 flex justify-center items-center gap-2">
+        <i class="ph-fill ph-crown text-lg"></i> EVENT PASS AKTYWNY | POZOSTAŁO UŻYĆ: <span id="passUsesCount">3</span>/3
     </div>
 
-    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-5xl glass px-6 py-3 flex justify-between items-center transition-all">
-        <div class="flex items-center gap-3 cursor-pointer group" onclick="window.scrollTo(0,0)">
-            <div class="w-10 h-10 rounded-full bg-[#ff1a1a] flex items-center justify-center shadow-[0_0_20px_rgba(255,0,0,0.6)] group-hover:scale-105 transition-transform">
-                <i class="ph-fill ph-flame text-white text-xl"></i>
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-[#030303]/80 backdrop-blur-xl border-b border-white/5">
+        <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
+                <img src="logo1.png" alt="redflame" class="h-10 object-contain">
+                <span class="text-xl font-bold tracking-tight text-white">redflame</span>
             </div>
-            <span class="text-xl font-black tracking-tighter uppercase text-white">red<span class="text-[#ff1a1a]">flame</span></span>
+            
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#portfolio" class="group relative text-sm font-medium text-gray-400 hover:text-white transition-colors">
+                    Portfolio
+                    <span class="absolute -bottom-2 left-0 h-0.5 bg-red-500 w-0 transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#pricing" class="group relative text-sm font-medium text-gray-400 hover:text-white transition-colors">
+                    Event Pass
+                    <span class="absolute -bottom-2 left-0 h-0.5 bg-red-500 w-0 transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#reviews" class="group relative text-sm font-medium text-gray-400 hover:text-white transition-colors">
+                    Opinie
+                    <span class="absolute -bottom-2 left-0 h-0.5 bg-red-500 w-0 transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#faq" class="group relative text-sm font-medium text-gray-400 hover:text-white transition-colors">
+                    FAQ
+                    <span class="absolute -bottom-2 left-0 h-0.5 bg-red-500 w-0 transition-all group-hover:w-full"></span>
+                </a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a href="https://discord.gg/YCTj7ERsbf" target="_blank" class="hidden md:flex btn-glass px-5 py-2 text-sm items-center gap-2">
+                    Discord <i class="ph-bold ph-discord-logo"></i>
+                </a>
+                <a href="#orders" class="btn-primary px-6 py-2.5 text-sm">
+                    Odbierz pliki
+                </a>
+            </div>
         </div>
-        <div class="hidden md:flex items-center gap-8 text-xs font-bold text-gray-400 uppercase tracking-widest">
-            <a href="#portfolio" class="hover:text-white flex items-center gap-1.5 transition-colors"><i class="ph-bold ph-folder-open text-[#ff1a1a] text-lg"></i> MOGRTs</a>
-            <a href="#pricing" class="hover:text-white flex items-center gap-1.5 transition-colors"><i class="ph-bold ph-ticket text-[#ff1a1a] text-lg"></i> Pass</a>
-            <a href="#orders" class="hover:text-white flex items-center gap-1.5 transition-colors"><i class="ph-bold ph-download-simple text-[#ff1a1a] text-lg"></i> Odbiór</a>
-        </div>
-        <a href="https://discord.gg/YCTj7ERsbf" target="_blank" class="bg-white/10 hover:bg-white/20 border border-white/10 px-6 py-2.5 rounded-full text-xs font-bold text-white transition-all flex items-center gap-2 backdrop-blur-md">
-            <i class="ph-fill ph-discord-logo text-[#5865F2] text-lg"></i> DISCORD
-        </a>
     </nav>
 
-    <header class="relative z-10 flex flex-col items-center justify-center text-center px-4 max-w-5xl mx-auto min-h-[90vh] pt-20">
-        <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#ff1a1a]/10 border border-[#ff1a1a]/30 text-[#ff1a1a] text-[10px] font-black mb-8 uppercase tracking-[0.2em] backdrop-blur-md shadow-[0_0_20px_rgba(255,26,26,0.15)]">
-            <i class="ph-fill ph-lightning text-lg"></i> W PEŁNI EDYTOWALNE SZABLONY
-        </div>
+    <section class="flex flex-col items-center px-6 pt-40 pb-16 relative z-10 overflow-hidden">
         
-        <h1 class="text-5xl md:text-[6.5rem] font-black mb-6 tracking-tighter leading-[0.9]">
-            <span class="text-gradient">Profesjonalne</span><br>
-            <span class="text-white drop-shadow-[0_0_40px_rgba(255,0,0,0.4)]">Motion Graphics.</span>
-        </h1>
-        
-        <p class="text-gray-400 text-sm md:text-base max-w-2xl mb-12 font-medium leading-relaxed">
-            Przyspiesz montaż i podnieś jakość swoich materiałów. Gotowe assety MOGRT z kanałem Alpha stworzone dla czołowych twórców internetowych.
-        </p>
-        
-        <button onclick="document.getElementById('portfolio').scrollIntoView({behavior:'smooth'})" class="btn-premium px-12 py-5 text-xs flex items-center gap-3">
-            OTWÓRZ BIBLIOTEKĘ <i class="ph-bold ph-caret-down text-lg"></i>
-        </button>
-    </header>
+        <div class="hero-bg-grid"></div>
+        <div class="hero-white-glow"></div>
 
-    <section id="portfolio" class="px-6 md:px-12 max-w-[1300px] mx-auto my-24 relative z-10">
-        <div class="mb-16 text-center">
-            <div class="inline-flex justify-center items-center gap-2 mb-4">
-                <i class="ph-fill ph-video-camera text-[#ff1a1a] text-4xl drop-shadow-[0_0_15px_rgba(255,0,0,0.5)]"></i>
+        <div class="mb-10 text-center max-w-4xl mx-auto reveal">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-red-500/30 bg-red-500/10 text-red-400 text-[10px] font-bold mb-6 uppercase tracking-widest backdrop-blur-md">
+                <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span> Twój nowy workflow
             </div>
-            <h2 class="text-4xl md:text-5xl font-black tracking-tight text-white mb-3">Katalog Assetów</h2>
-            <p class="text-gray-400 text-xs font-bold uppercase tracking-widest">Wybierz projekt i skonfiguruj zamówienie</p>
+            
+            <h1 class="mb-6 text-5xl font-bold text-white md:text-7xl tracking-tight leading-tight">
+                Podnieś jakość <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-red-500 to-red-700">swoich produkcji.</span>
+            </h1>
+            <p class="mx-auto max-w-2xl text-lg text-gray-400 md:text-xl font-light">
+                Przyspiesz montaż i zrób wrażenie na widzach. Gotowe, w pełni edytowalne assety MOGRT z kanałem Alpha stworzone dla profesjonalistów.
+            </p>
         </div>
-        
-        <div id="mainGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
 
-        <div id="expandBtnContainer" class="flex justify-center mt-12">
-            <button onclick="expandLibrary()" class="glass border-[#ff1a1a]/30 text-white px-8 py-4 rounded-full flex items-center gap-3 hover:bg-[#ff1a1a]/20 transition-all text-xs font-black uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(255,26,26,0.1)]">
-                <i class="ph-bold ph-squares-four text-[#ff1a1a] text-xl"></i> Pokaż więcej animacji
+        <div class="mb-16 flex w-full flex-col gap-4 sm:w-auto sm:flex-row justify-center reveal" style="transition-delay: 100ms;">
+            <button onclick="document.getElementById('portfolio').scrollIntoView({behavior:'smooth'})" class="btn-primary px-8 py-3.5 text-sm flex items-center justify-center gap-2 w-full sm:w-auto">
+                Przeglądaj bibliotekę <i class="ph-bold ph-arrow-right"></i>
+            </button>
+            <button onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})" class="btn-glass px-8 py-3.5 text-sm flex items-center justify-center gap-2 w-full sm:w-auto">
+                Kup Event Pass
             </button>
         </div>
 
-        <div id="expandedLibrary" class="hidden grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8 fade-in"></div>
+        <div class="w-full max-w-6xl mx-auto mb-16 mt-8 reveal" style="transition-delay: 200ms;">
+            <h3 class="text-center text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-200 text-sm uppercase tracking-[0.2em] mb-8 font-bold text-shadow-sm">
+                Zaufali nam topowi twórcy
+            </h3>
+            <div class="marquee-wrapper">
+                <div class="marquee-content marquee-content-slow">
+                    <div class="flex items-center gap-3 bg-[#0a0a0a]/80 border border-white/10 rounded-full pl-2 pr-6 py-2 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:border-red-500/30 hover:bg-[#111] transition-colors">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Dranczips&backgroundColor=2b2b2b" alt="Avatar" class="w-10 h-10 rounded-full bg-neutral-800 border border-white/5">
+                        <div class="flex flex-col justify-center">
+                            <span class="text-[15px] font-bold text-white leading-tight">Dranczips</span>
+                            <span class="text-[11px] text-gray-500 font-medium">117K Subskrypcji</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 bg-[#0a0a0a]/80 border border-white/10 rounded-full pl-2 pr-6 py-2 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:border-red-500/30 hover:bg-[#111] transition-colors">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=ManFelt&backgroundColor=1a1a1a" alt="Avatar" class="w-10 h-10 rounded-full bg-neutral-800 border border-white/5">
+                        <div class="flex flex-col justify-center">
+                            <span class="text-[15px] font-bold text-white leading-tight">ManFelt</span>
+                            <span class="text-[11px] text-gray-500 font-medium">46K Subskrypcji</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 bg-[#0a0a0a]/80 border border-white/10 rounded-full pl-2 pr-6 py-2 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:border-red-500/30 hover:bg-[#111] transition-colors">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Szery&backgroundColor=3a1a1a" alt="Avatar" class="w-10 h-10 rounded-full bg-neutral-800 border border-white/5">
+                        <div class="flex flex-col justify-center">
+                            <span class="text-[15px] font-bold text-white leading-tight">Szery</span>
+                            <span class="text-[11px] text-gray-500 font-medium">61K Subskrypcji</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 bg-[#0a0a0a]/80 border border-white/10 rounded-full pl-2 pr-6 py-2 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:border-red-500/30 hover:bg-[#111] transition-colors">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Miki129&backgroundColor=1a1a3a" alt="Avatar" class="w-10 h-10 rounded-full bg-neutral-800 border border-white/5">
+                        <div class="flex flex-col justify-center">
+                            <span class="text-[15px] font-bold text-white leading-tight">Miki129</span>
+                            <span class="text-[11px] text-gray-500 font-medium">40K Subskrypcji</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 bg-[#0a0a0a]/80 border border-white/10 rounded-full pl-2 pr-6 py-2 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:border-red-500/30 hover:bg-[#111] transition-colors">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=xDeush&backgroundColor=1a3a1a" alt="Avatar" class="w-10 h-10 rounded-full bg-neutral-800 border border-white/5">
+                        <div class="flex flex-col justify-center">
+                            <span class="text-[15px] font-bold text-white leading-tight">xDeush</span>
+                            <span class="text-[11px] text-gray-500 font-medium">50K Subskrypcji</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 bg-[#0a0a0a]/80 border border-white/10 rounded-full pl-2 pr-6 py-2 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:border-red-500/30 hover:bg-[#111] transition-colors">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Wolfi&backgroundColor=3a3a1a" alt="Avatar" class="w-10 h-10 rounded-full bg-neutral-800 border border-white/5">
+                        <div class="flex flex-col justify-center">
+                            <span class="text-[15px] font-bold text-white leading-tight">Wolfi</span>
+                            <span class="text-[11px] text-gray-500 font-medium">82K Subskrypcji</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 bg-[#0a0a0a]/80 border border-white/10 rounded-full pl-2 pr-6 py-2 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:border-red-500/30 hover:bg-[#111] transition-colors">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Dranhis&backgroundColor=1a1a2a" alt="Avatar" class="w-10 h-10 rounded-full bg-neutral-800 border border-white/5">
+                        <div class="flex flex-col justify-center">
+                            <span class="text-[15px] font-bold text-white leading-tight">Dranhis</span>
+                            <span class="text-[11px] text-gray-500 font-medium">29K Subskrypcji</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="marquee-content marquee-content-slow" aria-hidden="true">
+                    <div class="flex items-center gap-3 bg-[#0a0a0a]/80 border border-white/10 rounded-full pl-2 pr-6 py-2 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:border-red-500/30 hover:bg-[#111] transition-colors">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Dranczips&backgroundColor=2b2b2b" alt="Avatar" class="w-10 h-10 rounded-full bg-neutral-800 border border-white/5">
+                        <div class="flex flex-col justify-center">
+                            <span class="text-[15px] font-bold text-white leading-tight">Dranczips</span>
+                            <span class="text-[11px] text-gray-500 font-medium">117K Subskrypcji</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 bg-[#0a0a0a]/80 border border-white/10 rounded-full pl-2 pr-6 py-2 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:border-red-500/30 hover:bg-[#111] transition-colors">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=ManFelt&backgroundColor=1a1a1a" alt="Avatar" class="w-10 h-10 rounded-full bg-neutral-800 border border-white/5">
+                        <div class="flex flex-col justify-center">
+                            <span class="text-[15px] font-bold text-white leading-tight">ManFelt</span>
+                            <span class="text-[11px] text-gray-500 font-medium">46K Subskrypcji</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 bg-[#0a0a0a]/80 border border-white/10 rounded-full pl-2 pr-6 py-2 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:border-red-500/30 hover:bg-[#111] transition-colors">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Szery&backgroundColor=3a1a1a" alt="Avatar" class="w-10 h-10 rounded-full bg-neutral-800 border border-white/5">
+                        <div class="flex flex-col justify-center">
+                            <span class="text-[15px] font-bold text-white leading-tight">Szery</span>
+                            <span class="text-[11px] text-gray-500 font-medium">61K Subskrypcji</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 bg-[#0a0a0a]/80 border border-white/10 rounded-full pl-2 pr-6 py-2 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:border-red-500/30 hover:bg-[#111] transition-colors">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Miki129&backgroundColor=1a1a3a" alt="Avatar" class="w-10 h-10 rounded-full bg-neutral-800 border border-white/5">
+                        <div class="flex flex-col justify-center">
+                            <span class="text-[15px] font-bold text-white leading-tight">Miki129</span>
+                            <span class="text-[11px] text-gray-500 font-medium">40K Subskrypcji</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 bg-[#0a0a0a]/80 border border-white/10 rounded-full pl-2 pr-6 py-2 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:border-red-500/30 hover:bg-[#111] transition-colors">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=xDeush&backgroundColor=1a3a1a" alt="Avatar" class="w-10 h-10 rounded-full bg-neutral-800 border border-white/5">
+                        <div class="flex flex-col justify-center">
+                            <span class="text-[15px] font-bold text-white leading-tight">xDeush</span>
+                            <span class="text-[11px] text-gray-500 font-medium">50K Subskrypcji</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 bg-[#0a0a0a]/80 border border-white/10 rounded-full pl-2 pr-6 py-2 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:border-red-500/30 hover:bg-[#111] transition-colors">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Wolfi&backgroundColor=3a3a1a" alt="Avatar" class="w-10 h-10 rounded-full bg-neutral-800 border border-white/5">
+                        <div class="flex flex-col justify-center">
+                            <span class="text-[15px] font-bold text-white leading-tight">Wolfi</span>
+                            <span class="text-[11px] text-gray-500 font-medium">82K Subskrypcji</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 bg-[#0a0a0a]/80 border border-white/10 rounded-full pl-2 pr-6 py-2 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:border-red-500/30 hover:bg-[#111] transition-colors">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Dranhis&backgroundColor=1a1a2a" alt="Avatar" class="w-10 h-10 rounded-full bg-neutral-800 border border-white/5">
+                        <div class="flex flex-col justify-center">
+                            <span class="text-[15px] font-bold text-white leading-tight">Dranhis</span>
+                            <span class="text-[11px] text-gray-500 font-medium">29K Subskrypcji</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="relative mx-auto w-full max-w-5xl rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-1 backdrop-blur-sm shadow-2xl reveal" style="transition-delay: 300ms;">
+            <div class="w-full aspect-video bg-[#050505] rounded-xl flex flex-col items-center justify-center overflow-hidden relative group">
+                <div class="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent z-10 pointer-events-none"></div>
+                <i class="ph-duotone ph-play-circle text-7xl text-gray-700 mb-4 group-hover:text-red-500 transition-colors duration-500 cursor-pointer relative z-20"></i>
+                <p class="text-gray-600 text-sm font-medium relative z-20">Podgląd możliwości naszych paczek</p>
+            </div>
+        </div>
     </section>
 
-    <section id="pricing" class="w-full px-6 max-w-5xl mx-auto my-32 relative z-10">
-        <div class="glass p-8 md:p-14 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-10 border-[#ff1a1a]/30 shadow-[0_0_50px_rgba(255,26,26,0.1)]">
-            <div class="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-[#ff1a1a]/10 rounded-full blur-[100px] pointer-events-none"></div>
+    <section id="portfolio" class="px-6 py-24 max-w-[1400px] mx-auto relative z-10 reveal">
+        <div class="mb-12 text-center md:text-left">
+            <p class="mb-3 text-sm font-bold tracking-widest text-red-500 uppercase">Biblioteka MOGRT</p>
+            <h2 class="text-3xl font-bold tracking-tight text-white md:text-4xl mb-4">Wybierz projekt do <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">swojego materiału.</span></h2>
+            <p class="text-gray-400 max-w-2xl">Paczki zawierające gotowe kompozycje, z których zbudujesz profesjonalny odcinek w kilka minut.</p>
+        </div>
+        
+        <div id="mainGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+        <div id="expandBtnContainer" class="flex justify-center mt-12">
+            <button onclick="expandLibrary()" class="btn-glass px-8 py-3 text-sm flex items-center gap-2">
+                Pokaż wszystkie <i class="ph-bold ph-caret-down"></i>
+            </button>
+        </div>
+
+        <div id="expandedLibrary" class="hidden grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 fade-in"></div>
+    </section>
+
+    <section id="reviews" class="py-24 relative z-10 overflow-hidden bg-black/50 border-y border-white/5 reveal">
+        <div class="max-w-[1400px] mx-auto px-6 mb-12 text-center md:text-left">
+            <p class="mb-3 text-sm font-bold tracking-widest text-red-500 uppercase">Opinie</p>
+            <h2 class="text-3xl font-bold tracking-tight text-white md:text-4xl">Co mówią o nas <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">twórcy</span></h2>
+        </div>
+
+        <div class="relative max-w-[1400px] mx-auto px-6 flex items-center group">
             
-            <div class="flex-1 z-10">
-                <div class="inline-flex items-center gap-2 bg-[#ff1a1a]/10 border border-[#ff1a1a]/20 text-[#ff1a1a] text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-[0.2em] mb-4">
-                    <i class="ph-fill ph-crown text-lg"></i> Pakiet Premium
+            <button onclick="scrollReviews('left')" class="absolute left-0 z-20 btn-glass w-12 h-12 rounded-full flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity mx-2 shadow-lg backdrop-blur-xl bg-black/60 border border-white/20">
+                <i class="ph-bold ph-caret-left text-xl text-white"></i>
+            </button>
+
+            <div id="reviewsSliderContainer" class="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth hide-scrollbar px-10 py-4 w-full">
+                <div class="w-[350px] shrink-0 snap-center apple-glass p-6">
+                    <div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center"><i class="ph-bold ph-user text-gray-400"></i></div><div><p class="text-sm font-bold text-white">Mati</p><div class="flex text-red-500 text-xs"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div></div></div>
+                    <p class="text-sm text-gray-300">"Najlepsze MOGRTy na rynku! Zmieniło moje filmy o 180 stopni."</p>
                 </div>
-                <h2 class="text-4xl md:text-5xl font-black text-white mb-8 tracking-tighter">Event Pass</h2>
+                <div class="w-[350px] shrink-0 snap-center apple-glass p-6">
+                    <div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center"><i class="ph-bold ph-user text-gray-400"></i></div><div><p class="text-sm font-bold text-white">Kacper</p><div class="flex text-red-500 text-xs"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div></div></div>
+                    <p class="text-sm text-gray-300">"Sztos animacje, widzowie od razu zauważyli skok jakości."</p>
+                </div>
+                <div class="w-[350px] shrink-0 snap-center apple-glass p-6">
+                    <div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center"><i class="ph-bold ph-user text-gray-400"></i></div><div><p class="text-sm font-bold text-white">Oskar</p><div class="flex text-red-500 text-xs"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div></div></div>
+                    <p class="text-sm text-gray-300">"Polecam, mega szybko i łatwo się to edytuje w Premiere."</p>
+                </div>
+                <div class="w-[350px] shrink-0 snap-center apple-glass p-6">
+                    <div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center"><i class="ph-bold ph-user text-gray-400"></i></div><div><p class="text-sm font-bold text-white">Dawid</p><div class="flex text-red-500 text-xs"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div></div></div>
+                    <p class="text-sm text-gray-300">"Event pass to złoto. Wybrałem 3 pakiety i mam content na cały rok."</p>
+                </div>
+                <div class="w-[350px] shrink-0 snap-center apple-glass p-6">
+                    <div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center"><i class="ph-bold ph-user text-gray-400"></i></div><div><p class="text-sm font-bold text-white">Kamil</p><div class="flex text-red-500 text-xs"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div></div></div>
+                    <p class="text-sm text-gray-300">"Świetny kontakt na discordzie, pomoc administracji top."</p>
+                </div>
+                <div class="w-[350px] shrink-0 snap-center apple-glass p-6">
+                    <div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center"><i class="ph-bold ph-user text-gray-400"></i></div><div><p class="text-sm font-bold text-white">Szymon</p><div class="flex text-red-500 text-xs"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div></div></div>
+                    <p class="text-sm text-gray-300">"Super paczki UI. Retencja na filmach skoczyła o 15%."</p>
+                </div>
+                <div class="w-[350px] shrink-0 snap-center apple-glass p-6">
+                    <div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center"><i class="ph-bold ph-user text-gray-400"></i></div><div><p class="text-sm font-bold text-white">Tomek</p><div class="flex text-red-500 text-xs"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div></div></div>
+                    <p class="text-sm text-gray-300">"Mega jakość projektów. Alpha channel robi świetną robotę."</p>
+                </div>
+                <div class="w-[350px] shrink-0 snap-center apple-glass p-6">
+                    <div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center"><i class="ph-bold ph-user text-gray-400"></i></div><div><p class="text-sm font-bold text-white">Bartek</p><div class="flex text-red-500 text-xs"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div></div></div>
+                    <p class="text-sm text-gray-300">"Polecam każdemu twórcy, który nie ma czasu na After Effects."</p>
+                </div>
+                <div class="w-[350px] shrink-0 snap-center apple-glass p-6">
+                    <div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center"><i class="ph-bold ph-user text-gray-400"></i></div><div><p class="text-sm font-bold text-white">Michał</p><div class="flex text-red-500 text-xs"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div></div></div>
+                    <p class="text-sm text-gray-300">"Więcej wyświetleń od razu! Montaż zajmuje mi teraz połowę czasu."</p>
+                </div>
+                <div class="w-[350px] shrink-0 snap-center apple-glass p-6">
+                    <div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center"><i class="ph-bold ph-user text-gray-400"></i></div><div><p class="text-sm font-bold text-white">Patryk</p><div class="flex text-red-500 text-xs"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div></div></div>
+                    <p class="text-sm text-gray-300">"Za taką cenę jakość jest powalająca. Czekam na nowe paczki."</p>
+                </div>
+            </div>
+
+            <button onclick="scrollReviews('right')" class="absolute right-0 z-20 btn-glass w-12 h-12 rounded-full flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity mx-2 shadow-lg backdrop-blur-xl bg-black/60 border border-white/20">
+                <i class="ph-bold ph-caret-right text-xl text-white"></i>
+            </button>
+
+        </div>
+    </section>
+
+    <section id="pricing" class="px-6 py-24 max-w-6xl mx-auto relative z-10 reveal">
+        <div class="apple-glass p-8 md:p-12 relative flex flex-col md:flex-row items-center justify-between gap-10 overflow-hidden">
+            <div class="absolute -top-20 -right-20 w-64 h-64 bg-red-500/10 rounded-full blur-[80px] pointer-events-none"></div>
+
+            <div class="flex-1 relative z-10">
+                <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1 rounded-full text-xs font-bold text-gray-300 mb-4">
+                    <i class="ph-fill ph-star text-red-500"></i> Pakiet Zbiorczy
+                </div>
+                <h2 class="text-4xl font-bold text-white mb-6 tracking-tight">Event Pass</h2>
                 
-                <ul class="space-y-5 text-sm text-gray-300 font-medium">
-                    <li class="flex items-center gap-4">
-                        <div class="w-8 h-8 rounded-full bg-black/50 border border-[#ff1a1a]/50 flex items-center justify-center text-[#ff1a1a]"><i class="ph-bold ph-check text-lg"></i></div>
-                        Zyskujesz uprawnienia do pobrania <span class="text-white font-bold">3 dowolnych animacji</span>.
+                <ul class="space-y-4 text-sm text-gray-300">
+                    <li class="flex items-center gap-3">
+                        <div class="w-6 h-6 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400"><i class="ph-bold ph-check"></i></div>
+                        Wybierz i pobierz <span class="text-white font-semibold">3 dowolne animacje</span> z biblioteki.
                     </li>
-                    <li class="flex items-center gap-4">
-                        <div class="w-8 h-8 rounded-full bg-black/50 border border-[#ff1a1a]/50 flex items-center justify-center text-[#ff1a1a]"><i class="ph-bold ph-clock text-lg"></i></div>
-                        Kod subskrypcji zachowuje ważność przez 30 dni.
+                    <li class="flex items-center gap-3">
+                        <div class="w-6 h-6 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400"><i class="ph-bold ph-check"></i></div>
+                        Kod ważny przez 30 dni od momentu aktywacji na serwerze.
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <div class="w-6 h-6 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400"><i class="ph-bold ph-check"></i></div>
+                        Pełna licencja do projektów komercyjnych i na YouTube.
                     </li>
                 </ul>
             </div>
 
-            <div class="w-full md:w-auto flex flex-col items-center md:items-end p-8 bg-black/60 rounded-3xl border border-white/5 backdrop-blur-md relative z-10">
-                <div class="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-2 flex items-center gap-2"><i class="ph-fill ph-wallet text-[#ff1a1a] text-lg"></i> Ważność: 1 Miesiąc</div>
-                <div class="text-6xl font-black text-white mb-6 tracking-tighter">50 <span class="text-2xl text-[#ff1a1a]">PLN</span></div>
-                <button onclick="document.getElementById('orders').scrollIntoView({behavior:'smooth'})" class="btn-premium w-full py-5 px-10 text-xs flex justify-center items-center gap-2">
-                    <i class="ph-bold ph-shopping-cart text-lg"></i> KUP EVENT PASS
+            <div class="w-full md:w-80 flex flex-col p-8 bg-[#030303]/80 border border-white/10 rounded-3xl relative z-10 shadow-2xl backdrop-blur-xl text-center">
+                <div class="text-[10px] font-medium text-gray-500 uppercase tracking-widest mb-2">Cena pakietu</div>
+                <div class="text-5xl font-bold text-white mb-6 tracking-tight">50 <span class="text-xl text-gray-500 font-medium">PLN</span></div>
+                <button onclick="document.getElementById('orders').scrollIntoView({behavior:'smooth'})" class="btn-primary w-full py-4 text-sm">
+                    Kupuję dostęp
                 </button>
             </div>
         </div>
     </section>
 
-    <section id="orders" class="px-6 w-full max-w-4xl mx-auto my-32 relative z-10">
-        <div class="glass p-10 md:p-16 text-center flex flex-col items-center border-t border-[#ff1a1a]/30 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-            <div class="w-24 h-24 rounded-3xl bg-[#0a0a0a] border border-[#ff1a1a]/40 flex items-center justify-center mb-8 shadow-[0_0_40px_rgba(255,26,26,0.2)]">
-                <i class="ph-fill ph-lock-key text-5xl text-[#ff1a1a]"></i>
+    <section id="orders" class="px-6 py-12 w-full max-w-3xl mx-auto relative z-10 reveal">
+        <div class="apple-glass p-8 text-center flex flex-col items-center">
+            <div class="w-12 h-12 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center mb-4 text-gray-300 shadow-inner">
+                <i class="ph-duotone ph-key text-2xl"></i>
             </div>
-            
-            <h2 class="text-4xl font-black text-white mb-4 tracking-tight uppercase">Odbiór i Weryfikacja</h2>
-            <p class="text-gray-400 text-sm mb-12 max-w-lg leading-relaxed">
-                Wprowadź klucz otrzymany na Discordzie aby odebrać pliki <strong class="text-white">LUB</strong> wpisz swój kod z <strong class="text-green-500">Event Passa</strong> aby aktywować subskrypcję.
+
+            <h2 class="text-2xl font-bold text-white mb-2">Aktywacja Klucza</h2>
+            <p class="text-gray-400 text-sm mb-8 max-w-md">
+                Wklej jednorazowy klucz zakupu lub kod Event Pass z Discorda, aby uzyskać dostęp do pobierania.
             </p>
             
-            <div class="flex flex-col sm:flex-row gap-4 w-full max-w-xl relative">
-                <i class="ph-bold ph-key text-[#ff1a1a] text-2xl absolute left-5 top-1/2 -translate-y-1/2 z-10"></i>
-                <input type="text" id="accessCode" class="flex-1 bg-black/80 border border-[#ff1a1a]/20 text-white font-black p-6 pl-14 text-center text-lg tracking-widest uppercase outline-none rounded-2xl focus:border-[#ff1a1a] transition-all placeholder:text-gray-700 shadow-inner" placeholder="RF-XXXX-FULL / EVENT PASS">
-                <button onclick="checkAccessCode()" class="bg-[#ff1a1a] hover:bg-[#e60000] text-white px-10 py-6 rounded-2xl font-black tracking-widest uppercase text-xs transition-colors flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,26,26,0.3)]">
-                    ZATWIERDŹ
+            <div class="flex flex-col sm:flex-row gap-3 w-full max-w-lg mx-auto">
+                <input type="text" id="accessCode" class="flex-1 bg-[#050505] border border-white/10 text-white font-mono p-4 text-center text-sm uppercase outline-none rounded-xl focus:border-red-500/50 focus:shadow-[0_0_15px_rgba(255,26,26,0.1)] transition-all placeholder:text-gray-600" placeholder="Wprowadź kod dostępu...">
+                <button onclick="checkAccessCode()" class="btn-glass hover:bg-white hover:text-black px-8 py-4 rounded-xl font-bold text-sm transition-all flex items-center justify-center border-white/20">
+                    Zatwierdź
                 </button>
             </div>
             
-            <p id="codeError" class="text-red-400 text-xs mt-6 font-bold hidden bg-red-950/80 border border-red-500/50 py-3 px-8 rounded-full flex items-center gap-2"><i class="ph-bold ph-warning-circle text-lg"></i> <span></span></p>
+            <p id="codeError" class="text-red-400 text-sm mt-4 hidden"><span></span></p>
 
-            <div id="userDownloadContainer" class="mt-12 hidden w-full text-left bg-black/80 border border-green-500/50 p-8 rounded-3xl relative overflow-hidden shadow-[0_0_50px_rgba(34,197,94,0.15)]">
-                <div class="absolute left-0 top-0 w-2 h-full bg-green-500 shadow-[0_0_20px_#22c55e]"></div>
-                <div class="flex flex-col sm:flex-row justify-between items-center gap-6 pl-4">
+            <div id="userDownloadContainer" class="mt-8 hidden w-full text-left bg-[#050505] border border-white/10 p-6 rounded-xl max-w-lg mx-auto">
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
                     <div>
-                        <div class="text-[10px] text-green-400 font-black uppercase tracking-[0.2em] flex items-center gap-2 mb-2"><i class="ph-fill ph-check-circle text-xl"></i> Płatność zweryfikowana</div>
-                        <div id="unlockedFileName" class="text-xl font-black text-white uppercase tracking-wider">NAZWA ZASOBU</div>
+                        <div class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Płatność zweryfikowana</div>
+                        <div id="unlockedFileName" class="text-base font-bold text-white">
+                            <span id="unlockedFileNameText">Nazwa Zasobu</span>
+                        </div>
                     </div>
-                    <a id="downloadPayloadLink" href="#" target="_blank" class="bg-green-600 hover:bg-green-500 text-white py-5 px-10 text-xs font-black uppercase tracking-widest rounded-2xl transition-all flex items-center gap-3 shadow-[0_0_30px_rgba(34,197,94,0.3)]">
-                        POBIERZ PACZKĘ <i class="ph-bold ph-download-simple text-2xl"></i>
+                    <a id="downloadPayloadLink" href="#" target="_blank" class="bg-white text-black hover:bg-gray-200 py-3 px-6 text-sm font-bold rounded-lg transition-all flex items-center gap-2">
+                        Pobierz <i class="ph-bold ph-download-simple"></i>
                     </a>
                 </div>
             </div>
 
-            <div id="passSuccessContainer" class="mt-12 hidden w-full text-center bg-green-950/30 border border-green-500/50 p-8 rounded-3xl relative overflow-hidden shadow-[0_0_50px_rgba(34,197,94,0.15)]">
-                <i class="ph-fill ph-crown text-5xl text-green-500 mb-4"></i>
-                <h3 class="text-2xl font-black text-white mb-2 uppercase tracking-widest">Event Pass Aktywowany!</h3>
-                <p class="text-gray-400 text-sm font-bold">Zalogowano pomyślnie. Wybierz animację z katalogu u góry, aby ją odblokować.</p>
+            <div id="passSuccessContainer" class="mt-8 hidden w-full text-center bg-green-500/10 border border-green-500/20 p-6 rounded-xl max-w-lg mx-auto">
+                <h3 class="text-base font-bold text-green-400 mb-1">Event Pass Aktywowany</h3>
+                <p class="text-gray-400 text-sm">Wybierz animację z Biblioteki u góry, aby ją odblokować.</p>
             </div>
 
-            <div id="adminPanelContainer" class="mt-12 hidden w-full text-left bg-[#050000] border border-[#ff1a1a]/50 p-8 rounded-3xl relative shadow-[0_0_50px_rgba(255,26,26,0.1)]">
-                <div class="flex items-center gap-3 mb-6 border-b border-white/10 pb-4">
-                    <i class="ph-fill ph-terminal-window text-[#ff1a1a] text-2xl"></i>
-                    <h3 class="text-white text-lg font-black tracking-widest uppercase">Generowanie Kluczy [ADMIN]</h3>
+            <div id="adminPanelContainer" class="mt-8 hidden w-full text-left bg-[#050505] border border-red-500/30 p-6 rounded-xl max-w-lg mx-auto">
+                <div class="flex items-center gap-2 mb-4 border-b border-white/5 pb-3">
+                    <i class="ph-duotone ph-terminal-window text-red-500 text-lg"></i>
+                    <h3 class="text-white text-sm font-bold">Admin Control</h3>
                 </div>
-                
-                <div class="grid grid-cols-1 gap-6">
-                    <div>
-                        <label class="text-[10px] text-gray-500 font-bold uppercase tracking-widest block mb-2">Typ Przepustki Globalnej</label>
-                        <select id="adminGlobalSelect" class="w-full bg-black border border-white/10 text-white p-4 text-sm font-bold outline-none rounded-xl focus:border-[#ff1a1a]/50 mb-4">
-                            <option value="PASS">KOD: Event Pass (3 Pobrania)</option>
-                        </select>
-                        <button onclick="adminGeneratePass()" class="btn-premium w-full py-4 text-xs">WYGENERUJ KOD EVENT PASS</button>
-                    </div>
-                </div>
-                
-                <div id="adminResultBox" class="bg-black border border-dashed border-[#ff1a1a]/50 p-6 rounded-2xl text-center hidden mt-6">
-                    <span class="text-[10px] text-gray-400 block mb-2 font-bold uppercase tracking-widest">KOD UTWORZONY W BAZIE:</span>
-                    <div id="adminResultText" class="text-3xl font-black text-white tracking-widest uppercase selection:bg-[#ff1a1a]"></div>
+                <button onclick="adminGeneratePass()" class="btn-primary w-full py-3 text-sm">
+                    Generuj: EVENT PASS (3 Użycia)
+                </button>
+                <div id="adminResultBox" class="bg-black border border-white/10 p-3 rounded-lg text-center hidden mt-3">
+                    <div id="adminResultText" class="text-lg font-mono text-white selection:bg-red-500"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="border-t border-white/10 bg-[#050505] pt-16 pb-8 relative z-10 mt-20">
-        <div class="max-w-6xl mx-auto px-6 mb-12">
-            
-            <button onclick="toggleTOS()" class="w-full glass border-[#ff1a1a]/30 p-6 rounded-2xl flex justify-between items-center hover:bg-white/5 transition-colors group mb-12 cursor-pointer">
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-full bg-[#ff1a1a]/10 flex items-center justify-center border border-[#ff1a1a]/30 text-[#ff1a1a]">
-                        <i class="ph-fill ph-scales text-2xl"></i>
-                    </div>
-                    <div class="text-left">
-                        <h4 class="text-white font-black uppercase tracking-widest text-sm">Rozwiń Regulamin Sklepu</h4>
-                        <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest mt-1">Zasady zakupu, licencje i Event Pass</p>
+    <section id="faq" class="px-6 py-24 max-w-4xl mx-auto relative z-10 reveal">
+        <div class="mb-12 text-center md:text-left">
+            <p class="mb-3 text-sm font-bold tracking-widest text-red-500 uppercase">FAQ</p>
+            <h2 class="text-3xl font-bold tracking-tight text-white md:text-4xl">Często zadawane <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">pytania</span></h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-4">
+            <div class="flex flex-col gap-4">
+                <div class="apple-glass apple-glass-hover overflow-hidden">
+                    <button class="w-full p-6 text-left flex justify-between items-center text-white outline-none" onclick="toggleFaq(this)">
+                        <span class="font-medium text-sm">Jakie usługi dokładnie oferujecie?</span>
+                        <i class="ph-bold ph-plus text-gray-500 transition-transform"></i>
+                    </button>
+                    <div class="hidden px-6 pb-6 text-gray-400 text-sm leading-relaxed border-t border-white/5 pt-4 mt-2">
+                        Tworzymy gotowe, profesjonalne szablony animacji (MOGRT), przejścia wideo, pakiety interfejsów oraz elementy typograficzne dla Premiere Pro i After Effects.
                     </div>
                 </div>
-                <i id="tosIcon" class="ph-bold ph-caret-down text-[#ff1a1a] text-2xl group-hover:translate-y-1 transition-transform"></i>
-            </button>
-
-            <div id="tosContent" class="hidden bg-[#0a0a0a] border border-white/5 rounded-2xl p-8 mb-12 text-sm text-gray-400 font-medium leading-relaxed fade-in">
-                <h5 class="text-[#ff1a1a] font-black uppercase tracking-widest mb-4 flex items-center gap-2"><i class="ph-bold ph-shopping-bag text-lg"></i> 1. System Kodów i Zakupów</h5>
-                <p class="mb-6">Kody autoryzacyjne wydawane przez nas na Discordzie są <strong class="text-white">jednorazowego użytku</strong>. Po wpisaniu kodu w sekcji odbioru i odblokowaniu linku do pobrania, klucz zostaje trwale unieważniony w bazie danych. Zabrania się rozpowszechniania kodów osobom trzecim.</p>
-                
-                <h5 class="text-[#ff1a1a] font-black uppercase tracking-widest mb-4 flex items-center gap-2"><i class="ph-bold ph-ticket text-lg"></i> 2. Funkcjonowanie Event Pass</h5>
-                <p class="mb-6">Event Pass upoważnia do odblokowania i pobrania <strong class="text-white">dokładnie 3 wybranych projektów</strong> z naszej biblioteki w przeciągu 30 dni od aktywacji. Po zalogowaniu kodem Passa, w oknie animacji pojawia się specjalny przycisk pobierania. Każde kliknięcie "Odbierz" odejmuje jedno użycie z puli.</p>
-
-                <h5 class="text-[#ff1a1a] font-black uppercase tracking-widest mb-4 flex items-center gap-2"><i class="ph-bold ph-warning-octagon text-lg"></i> 3. Prawa Autorskie i Kary</h5>
-                <p>Odsprzedaż plików, udostępnianie paczek na zewnętrznych forach (tzw. "leaking") lub kopiowanie rozwiązań graficznych sklepu jest surowo zabronione. Złamanie regulaminu skutkuje natychmiastową blokadą dostępu, wpisaniem na czarną listę oraz interwencją prawną z tytułu naruszenia praw autorskich.</p>
+                <div class="apple-glass apple-glass-hover overflow-hidden">
+                    <button class="w-full p-6 text-left flex justify-between items-center text-white outline-none" onclick="toggleFaq(this)">
+                        <span class="font-medium text-sm">Z jakich programów korzystacie?</span>
+                        <i class="ph-bold ph-plus text-gray-500 transition-transform"></i>
+                    </button>
+                    <div class="hidden px-6 pb-6 text-gray-400 text-sm leading-relaxed border-t border-white/5 pt-4 mt-2">
+                        Wszystkie projekty budowane są natywnie w Adobe After Effects i eksportowane do formatu .mogrt, co daje Ci pełną edytowalność bezpośrednio w Premiere Pro.
+                    </div>
+                </div>
             </div>
             
-            <div class="text-center">
-                 <div class="text-gray-600 text-[10px] font-black uppercase tracking-[0.3em]">
-                    &copy; 2026 REDFLAME STUDIO. WSZELKIE PRAWA ZASTRZEŻONE.
+            <div class="flex flex-col gap-4">
+                <div class="apple-glass apple-glass-hover overflow-hidden">
+                    <button class="w-full p-6 text-left flex justify-between items-center text-white outline-none" onclick="toggleFaq(this)">
+                        <span class="font-medium text-sm">Jak działa Event Pass?</span>
+                        <i class="ph-bold ph-plus text-gray-500 transition-transform"></i>
+                    </button>
+                    <div class="hidden px-6 pb-6 text-gray-400 text-sm leading-relaxed border-t border-white/5 pt-4 mt-2">
+                        To jednorazowy klucz aktywacyjny, zdejmujący prowizje. Daje on pulę 3 darmowych pobrań z całej biblioteki. Wybierasz pliki i pobierasz od ręki. Brak subskrypcji.
+                    </div>
+                </div>
+                <div class="apple-glass apple-glass-hover overflow-hidden">
+                    <button class="w-full p-6 text-left flex justify-between items-center text-white outline-none" onclick="toggleFaq(this)">
+                        <span class="font-medium text-sm">Czy mogę używać tego komercyjnie?</span>
+                        <i class="ph-bold ph-plus text-gray-500 transition-transform"></i>
+                    </button>
+                    <div class="hidden px-6 pb-6 text-gray-400 text-sm leading-relaxed border-t border-white/5 pt-4 mt-2">
+                        Oczywiście. Po zakupie zyskujesz pełne prawa do używania naszych animacji we wszystkich projektach wideo, zarówno dla siebie na YouTube jak i dla Twoich klientów.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-black py-16 px-8 border-t border-white/10 mt-10">
+        <div class="mx-auto max-w-6xl reveal">
+            <div class="grid gap-12 md:grid-cols-4">
+                <div class="md:col-span-2">
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="logo1.png" alt="redflame" class="h-8 object-contain">
+                        <span class="text-xl font-bold tracking-tight text-white">redflame</span>
+                    </div>
+                    <p class="max-w-sm text-sm leading-relaxed text-gray-400 mb-4">
+                        Gotowe szablony i animacje podnoszące jakość Twoich materiałów wideo. Skup się na montażu, a nie na skomplikowanych efektach w After Effects.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="mb-4 font-semibold text-white">Nawigacja</h4>
+                    <ul class="flex flex-col gap-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">Strona Główna</a></li>
+                        <li><a href="#portfolio" class="hover:text-white transition">Portfolio</a></li>
+                        <li><a href="#reviews" class="hover:text-white transition">Opinie</a></li>
+                        <li><a href="#faq" class="hover:text-white transition">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="mb-4 font-semibold text-white">Regulaminy</h4>
+                    <ul class="flex flex-col gap-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">Polityka Prywatności</a></li>
+                        <li><a href="#" class="hover:text-white transition">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-white transition">Zwroty i Reklamacje</a></li>
+                        <li class="mt-2 text-gray-500">Kontakt: dc.redflame@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
+                <p>&copy; 2026 redflame. Wszelkie prawa zastrzeżone.</p>
+                <div class="flex gap-4">
+                    <a href="https://discord.gg/YCTj7ERsbf" class="hover:text-white"><i class="ph-fill ph-discord-logo text-xl"></i></a>
+                    <a href="#" class="hover:text-white"><i class="ph-fill ph-youtube-logo text-xl"></i></a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <div id="itemModal" class="fixed inset-0 z-[150] flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-xl transition-opacity" onclick="closeModal()"></div>
+    <div id="itemModal" class="fixed inset-0 z-[150] flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-400">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-md transition-opacity" onclick="closeModal()"></div>
         
-        <div class="glass w-full max-w-6xl flex flex-col md:flex-row relative shadow-[0_0_150px_rgba(255,0,0,0.15)] modal-scale-enter overflow-hidden bg-[#050505] border-[#ff1a1a]/30">
-            
-            <button onclick="closeModal()" class="absolute top-6 right-6 w-12 h-12 flex items-center justify-center bg-black hover:bg-[#ff1a1a] text-white transition-all rounded-full border border-white/10 z-50 group shadow-lg">
-                <i class="ph-bold ph-x text-lg group-hover:rotate-90 transition-transform"></i>
+        <div class="w-full max-w-3xl flex flex-col md:flex-row relative modal-scale-enter overflow-hidden apple-glass shadow-2xl">
+            <button onclick="closeModal()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-white/20 text-white transition-colors rounded-full z-50 backdrop-blur-md border border-white/10">
+                <i class="ph-bold ph-x text-sm"></i>
             </button>
 
-            <div class="w-full md:w-[45%] relative flex items-center justify-center bg-[#020000] border-r border-white/5 min-h-[400px] p-10 overflow-hidden">
-                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[radial-gradient(circle,#ff1a1a33,transparent_60%)] pointer-events-none"></div>
-                <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PHBhdGggZD0iTTIwLDBMMjAsNDBNMCwyMEw0MCwyMCIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDMpIiBzdHJva2Utd2lkdGg9IjEiLz48L3N2Zz4=')] opacity-30"></div>
-                <i class="ph-fill ph-file-video text-[14rem] text-[#ff1a1a] drop-shadow-[0_0_60px_rgba(255,26,26,0.4)] relative z-10 transform hover:scale-105 transition-transform duration-500"></i>
+            <div class="w-full md:w-2/5 relative bg-black/50 flex flex-col items-center justify-center min-h-[250px] border-r border-white/5">
+                <i class="ph-duotone ph-play-circle text-6xl text-gray-500 mb-2"></i>
+                <span class="text-[10px] text-gray-600 uppercase tracking-widest">Podgląd Video</span>
             </div>
 
-            <div class="w-full md:w-[55%] p-10 md:p-14 flex flex-col relative bg-[#0a0a0a]">
-                
+            <div class="w-full md:w-3/5 p-8 flex flex-col justify-center relative bg-gradient-to-br from-white/5 to-transparent">
                 <div id="modalViewDetails" class="flex flex-col h-full fade-in">
-                    <div class="inline-flex items-center gap-2 text-[#ff1a1a] text-[10px] font-black uppercase tracking-[0.2em] mb-2">
-                        <i class="ph-fill ph-cube"></i>  Szczegóły Projektu
+                    <div class="flex gap-2 mb-2">
+                        <span class="bg-white/5 border border-white/10 text-gray-400 text-[9px] font-bold px-2 py-1 rounded uppercase tracking-widest">MOGRT</span>
                     </div>
-                    <h2 id="modalTitle" class="text-4xl font-black text-white mb-6 tracking-tight uppercase">Nazwa MOGRT</h2>
-                    
-                    <div class="bg-black border border-white/10 rounded-2xl p-6 mb-8 relative">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-[10px] text-gray-400 font-black uppercase tracking-[0.2em] flex items-center gap-2"><i class="ph-bold ph-trend-up text-[#ff1a1a] text-lg"></i> Zainteresowanie w tym tyg.</span>
-                        </div>
-                        <div class="h-32 w-full flex items-end mt-2">
-                            <svg class="w-full h-full overflow-visible" viewBox="0 0 100 80" preserveAspectRatio="none">
-                                <path d="M 0 70 C 15 70, 25 10, 50 30 C 75 50, 85 10, 100 20" fill="none" stroke="#ff1a1a" stroke-width="3" stroke-linecap="round"></path>
-                            </svg>
-                        </div>
-                    </div>
+                    <h2 id="modalTitle" class="text-2xl font-bold text-white mb-2 tracking-tight">Nazwa Animacji</h2>
+                    <p class="text-gray-400 text-sm mb-8 leading-relaxed">Paczka zawierająca w pełni edytowalne pliki projektu oraz wyrenderowane pliki wideo z przezroczystością (Alpha).</p>
 
-                    <div id="clientPurchasePanel" class="flex flex-col flex-1">
-                        <div class="bg-black border border-white/10 rounded-xl p-3 pl-5 flex gap-3 items-center mb-6">
-                            <i class="ph-fill ph-tag text-[#ff1a1a] text-xl"></i>
-                            <input type="text" placeholder="MASZ KOD PROMOCYJNY?" class="bg-transparent text-white font-bold text-xs uppercase outline-none w-full placeholder:text-gray-600 tracking-widest">
-                            <button class="bg-[#ff1a1a]/10 text-[#ff1a1a] hover:bg-[#ff1a1a]/20 text-[10px] font-black uppercase tracking-widest px-6 py-3 rounded-lg transition-colors border border-[#ff1a1a]/20">ZASTOSUJ</button>
-                        </div>
-
-                        <div class="bg-gradient-to-r from-[#ff1a1a]/20 to-black border border-[#ff1a1a]/50 rounded-2xl p-6 flex justify-between items-center relative shadow-[0_0_30px_rgba(255,26,26,0.15)] mb-6">
-                            <div class="absolute left-0 top-0 w-2 h-full bg-[#ff1a1a]"></div>
-                            <div class="flex items-center gap-5 pl-2">
-                                <i class="ph-fill ph-infinity text-3xl text-[#ff1a1a]"></i>
-                                <div>
-                                    <div class="text-sm font-black text-white uppercase tracking-wider mb-1">Kupno na własność</div>
-                                    <div class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Licencja dożywotnia</div>
-                                </div>
+                    <div id="clientPurchasePanel" class="flex flex-col flex-1 mt-auto">
+                        <div class="flex justify-between items-center bg-black/40 rounded-xl p-4 border border-white/5 mb-4 backdrop-blur-sm">
+                            <div>
+                                <div class="text-sm font-semibold text-white">Zakup dożywotni</div>
+                                <div class="text-[10px] text-gray-500 uppercase tracking-widest">Pełna Licencja</div>
                             </div>
-                            <div class="text-3xl font-black text-[#ff1a1a]">20 PLN</div>
+                            <div class="text-xl font-bold text-white">20 PLN</div>
                         </div>
 
-                        <button onclick="processClientOrderClick()" class="btn-premium w-full py-5 text-sm mb-4">
-                            ZAMAWIAM TEN PROJEKT
+                        <button onclick="processClientOrderClick()" class="btn-primary w-full py-4 text-sm">
+                            ZAMAWIAM PROJEKT
                         </button>
                     </div>
 
-                    <div id="clientPassPanel" class="hidden flex-col flex-1 justify-center items-center bg-green-950/20 border border-green-500/30 rounded-2xl p-8 mb-4 text-center">
-                        <i class="ph-fill ph-crown text-4xl text-green-500 mb-4"></i>
-                        <h3 class="text-white font-black uppercase tracking-widest mb-2">EVENT PASS AKTYWNY</h3>
-                        <p class="text-[10px] text-gray-400 uppercase tracking-widest font-bold mb-6">Możesz odblokować tę animację za darmo.</p>
-                        
-                        <button onclick="processPassDownload()" class="bg-green-600 hover:bg-green-500 text-white w-full py-5 rounded-xl font-black uppercase tracking-[0.2em] text-sm shadow-[0_0_30px_rgba(34,197,94,0.4)] flex justify-center items-center gap-3 transition-colors">
-                            <i class="ph-bold ph-download-simple text-xl"></i> ODBLOKUJ (-1 UŻYCIE)
+                    <div id="clientPassPanel" class="hidden flex-col flex-1 justify-center bg-black/40 border border-green-500/20 rounded-xl p-6 mt-4 text-center backdrop-blur-sm">
+                        <p class="text-sm text-gray-300 font-medium mb-4">Użyj swojego pakietu Event Pass.</p>
+                        <button onclick="processPassDownload()" class="btn-glass hover:bg-white hover:text-black w-full py-3 text-sm border-white/20">
+                            Odblokuj (-1 Użycie)
                         </button>
                     </div>
 
-                    <div id="adminGeneratePanel" class="hidden flex-col flex-1 justify-center items-center bg-red-950/20 border border-red-500/30 rounded-2xl p-8 mb-4 text-center">
-                        <i class="ph-fill ph-shield-check text-4xl text-[#ff1a1a] mb-4"></i>
-                        <h3 class="text-white font-black uppercase tracking-widest mb-2">Panel Administratora</h3>
-                        <p class="text-[10px] text-gray-400 uppercase tracking-widest font-bold mb-6">Generuj jednorazowy kod dla tego klienta</p>
-                        
-                        <button onclick="processAdminCodeGeneration()" class="bg-[#ff1a1a] hover:bg-[#e60000] text-white w-full py-5 rounded-xl font-black uppercase tracking-[0.2em] text-sm shadow-[0_0_30px_rgba(255,26,26,0.4)] flex justify-center items-center gap-3 transition-colors">
-                            <i class="ph-bold ph-key text-xl"></i> UTWÓRZ KOD ODBIORU
+                    <div id="adminGeneratePanel" class="hidden flex-col flex-1 justify-center bg-black/40 border border-red-500/20 rounded-xl p-6 mt-4 text-center backdrop-blur-sm">
+                        <p class="text-sm text-gray-300 font-medium mb-4">Generuj klucz dostępu (Admin)</p>
+                        <button onclick="processAdminCodeGeneration()" class="btn-primary w-full py-3 text-sm">
+                            Utwórz klucz pojedynczy
                         </button>
                     </div>
                 </div>
 
                 <div id="modalViewCode" class="hidden flex-col h-full items-center justify-center text-center fade-in relative z-10">
-                    <div class="w-24 h-24 bg-green-500/10 border border-green-500/30 rounded-full flex items-center justify-center mb-6 text-green-500 shadow-[0_0_40px_rgba(34,197,94,0.2)]">
-                        <i class="ph-bold ph-check text-5xl"></i>
+                    <div class="w-16 h-16 bg-green-500/10 border border-green-500/20 rounded-2xl flex items-center justify-center mb-4 text-green-400 shadow-inner">
+                        <i class="ph-bold ph-check text-2xl"></i>
                     </div>
                     
-                    <h3 id="successStateTitle" class="text-3xl font-black text-white mb-2 tracking-tight uppercase"></h3>
-                    <p id="successStateDesc" class="text-sm text-gray-400 mb-8 max-w-sm font-bold"></p>
+                    <h3 id="successStateTitle" class="text-xl font-bold text-white mb-1">Sukces</h3>
+                    <p id="successStateDesc" class="text-sm text-gray-400 mb-6 font-medium"></p>
                     
-                    <div id="codeDisplayBox" class="hidden w-full bg-black border border-[#ff1a1a]/50 rounded-2xl py-8 px-6 mb-8 relative shadow-[inset_0_0_30px_rgba(255,26,26,0.15)]">
-                        <div class="text-[10px] text-[#ff1a1a] font-black uppercase tracking-[0.3em] absolute top-[-10px] bg-[#0a0a0a] px-4 py-1 rounded-full border border-[#ff1a1a]/30 left-1/2 -translate-x-1/2">JEDNORAZOWY KOD</div>
-                        <div id="generatedCodeDisplay" class="text-3xl font-black text-white tracking-widest uppercase selection:bg-[#ff1a1a]"></div>
+                    <div id="codeDisplayBox" class="hidden w-full bg-black/50 border border-white/10 rounded-xl py-4 px-4 mb-6 text-center backdrop-blur-sm">
+                        <div id="generatedCodeDisplay" class="text-lg font-mono font-bold text-white selection:bg-red-500"></div>
                     </div>
                     
-                    <a id="directDownloadBtn" href="#" target="_blank" class="hidden w-full bg-green-600 hover:bg-green-500 text-white py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-sm flex items-center justify-center gap-3 transition-all shadow-[0_15px_40px_rgba(34,197,94,0.3)]">
-                        POBIERZ PACZKĘ MOGRT <i class="ph-bold ph-download-simple text-2xl"></i>
+                    <a id="directDownloadBtn" href="#" target="_blank" class="hidden w-full bg-white text-black hover:bg-gray-200 py-3 rounded-xl font-bold text-sm justify-center items-center gap-2 transition-all">
+                        Pobierz pliki
                     </a>
 
-                    <a id="discordButton" href="https://discord.gg/YCTj7ERsbf" target="_blank" class="w-full bg-[#5865F2] hover:bg-[#4752C4] text-white py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-sm flex items-center justify-center gap-3 transition-all shadow-[0_15px_40px_rgba(88,101,242,0.3)]">
-                        PRZEJDŹ NA DISCORD <i class="ph-bold ph-arrow-right text-2xl"></i>
+                    <a id="discordButton" href="https://discord.gg/YCTj7ERsbf" target="_blank" class="w-full btn-glass hover:bg-white hover:text-black py-3 text-sm flex items-center justify-center gap-2 border-white/20">
+                        Przejdź na Discord
                     </a>
-                    
-                    <button onclick="resetModalView()" class="text-[10px] text-gray-500 font-bold hover:text-white uppercase tracking-[0.2em] transition-colors mt-8 border-b border-gray-700 hover:border-white pb-1">
-                        ZAMKNIJ OKNO
-                    </button>
                 </div>
-
             </div>
         </div>
     </div>
 
     <script>
+        // Funkcja do slidera Opinii
+        function scrollReviews(direction) {
+            const container = document.getElementById('reviewsSliderContainer');
+            // Szerokość karty + gap (350px + 24px)
+            const scrollAmount = 374; 
+            if(direction === 'left') {
+                container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        }
+
+        // SCROLL REVEAL LOGIC
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+
+        // ... Twoja oryginalna logika ...
+
+        function toggleFaq(element) {
+            const content = element.nextElementSibling;
+            const icon = element.querySelector('i');
+            
+            if(content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.classList.add('rotate-45');
+                element.parentElement.classList.add('border-white/20');
+            } else {
+                content.classList.add('hidden');
+                icon.classList.remove('rotate-45');
+                element.parentElement.classList.remove('border-white/20');
+            }
+        }
+
         const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1504547756197548193/5ZDaW8ge7aVkdtNWWjVz9-onYZziLm_PHW9XJ5m_3pXigl48Vrrkc2_YTrJUVO7cGSlD";
-        
         const BIN_ID = "6a1208bb6877513b27bfb238"; 
         const API_KEY = "$2a$10$orB6tuQH11mWIlPlRYCWx.rAhnKdKAfdQnr/KEgm3rbCBzAQsxFAe"; 
 
@@ -398,9 +747,6 @@
         let currentSelectedAnimId = ""; 
         let isAdminLoggedIn = false;
         let loggedInPassCode = null; 
-
-        // GŁÓWNY LINK POBIERANIA Z GOOGLE DRIVE
-        const DEFAULT_DRIVE_LINK = "https://drive.google.com/file/d/1wsih8mhCBuciiMovX-2Hljq2SFvBOxbU/view?usp=sharing";
 
         function sendDiscordWebhook(message) {
             if(!DISCORD_WEBHOOK_URL || DISCORD_WEBHOOK_URL.includes("TUTAJ_WKLEJ")) return;
@@ -412,18 +758,16 @@
         }
 
         const ANIMATION_DOWNLOAD_LINKS = {
-            // Możesz tu dodawać specyficzne linki, ale jeśli ich nie ma, kod użyje linku wyżej (DEFAULT_DRIVE_LINK)
-            "ANIMACJA 3 MAP": "https://drive.google.com/file/d/1wsih8mhCBuciiMovX-2Hljq2SFvBOxbU/view?usp=sharing"
+            "WEJŚCIE NA SERWER": "https://twojlink.pl/pliki/wejscie_na_serwer.zip",
+            "ANIMACJA 3 MAP": "https://drive.google.com/file/d/1wsih8mhCBuciiMovX-2Hljq2SFvBOxbU/view?usp=sharing",
+            "PRZEWIJANIE ITEMU": "https://twojlink.pl/pliki/przewijanie_itemu.zip"
         }; 
 
         const mogrtTitles = [
             "Wejście na serwer", "Animacja 3 Map", "Przewijanie Itemu", "Paczka Interfejsu", "Alert Subskrypcji", "Przejście Cyber",
-            "Neon Lower Thirds", "Glitch Transitions", "Esports Logo Reveal", "Minecraft HUD Pack", "Cinematic Title", "Twitch Overlay Pack",
-            "Social Popups", "Speed Lines Effect", "Particle Logo", "Dynamic Opener", "Retro VHS Look", "YouTube Endcards",
-            "Starting Soon", "Epic Text Trailer"
+            "Neon Lower Thirds", "Glitch Transitions", "Esports Logo Reveal"
         ];
 
-        // Zmieniony wygląd kafelków i dodane "zastępcze" tło graficzne
         function initLibrary() {
             const gridMain = document.getElementById('mainGrid');
             const gridExpanded = document.getElementById('expandedLibrary');
@@ -433,27 +777,34 @@
             
             mogrtTitles.forEach((title, index) => {
                 const cardHTML = `
-                    <div class="relative group cursor-pointer rounded-2xl overflow-hidden bg-[#0d0d0d] shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_40px_rgba(255,26,26,0.2)]" onclick="openModal('${title}')">
-                        <div class="w-full aspect-video relative overflow-hidden flex items-center justify-center bg-gradient-to-br from-black to-[#1a0000]">
-                            <div class="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_top_left,#ff1a1a_0%,transparent_50%)]"></div>
-                            <div class="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PHBhdGggZD0iTTEwLDBMMTAsMjBNMCwxMEwyMCwxMCIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDUpIiBzdHJva2Utd2lkdGg9IjEiLz48L3N2Zz4=')]"></div>
-                            
-                            <div class="z-20 w-14 h-14 rounded-full bg-[#ff1a1a]/90 backdrop-blur-md flex items-center justify-center transform scale-90 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(255,26,26,0.5)]">
-                                <i class="ph-fill ph-play text-2xl text-white ml-1"></i>
-                            </div>
+                    <div class="apple-glass apple-glass-hover overflow-hidden group cursor-pointer flex flex-col" onclick="openModal('${title}')">
+                        <div class="w-full aspect-video bg-[#050505] relative overflow-hidden flex items-center justify-center border-b border-white/5">
+                            <i class="ph-duotone ph-play-circle text-4xl text-white/20 group-hover:text-red-500 group-hover:scale-110 transition-all duration-500 z-20"></i>
                         </div>
-                        <div class="p-5 border-t border-white/5 relative z-10 bg-[#0d0d0d]">
-                            <h3 class="text-base font-black text-white uppercase tracking-wider mb-2 truncate">${title}</h3>
-                            <div class="flex items-center justify-between">
-                                <span class="text-gray-400 text-xs font-bold uppercase tracking-widest"><i class="ph-bold ph-video-camera mr-1"></i> MOGRT</span>
-                                <span class="text-[#ff1a1a] text-xs font-black bg-[#ff1a1a]/10 px-3 py-1 rounded-md border border-[#ff1a1a]/20">20 PLN</span>
+                        <div class="p-4 flex flex-col flex-1">
+                            <div class="flex gap-2 mb-2">
+                                <span class="bg-white/5 border border-white/10 text-gray-400 text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-widest">MOGRT</span>
+                            </div>
+                            <h3 class="text-base font-semibold text-white mb-1 truncate">${title}</h3>
+                            <p class="text-gray-500 text-xs mb-3 line-clamp-2">Paczka UI dla twórców wideo.</p>
+                            <div class="mt-auto pt-3 border-t border-white/5 flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-gray-400 text-[10px]">
+                                        <i class="ph-fill ph-fire text-red-500"></i>
+                                    </div>
+                                    <span class="text-gray-500 text-[10px] font-medium">REDFLAME</span>
+                                </div>
+                                <i class="ph-bold ph-arrow-right text-gray-500 group-hover:text-red-500 transition-colors"></i>
                             </div>
                         </div>
                     </div>
                 `;
-                if(index < 8) gridMain.innerHTML += cardHTML;
+                if(index < 6) gridMain.innerHTML += cardHTML;
                 else gridExpanded.innerHTML += cardHTML;
             });
+
+            // Wywołaj funkcję od razu po załadowaniu kart
+            setTimeout(reveal, 100);
         }
         initLibrary();
 
@@ -465,9 +816,7 @@
                 });
                 const data = await response.json();
                 rfDatabase = data.record || {};
-                console.log("Baza danych załadowana pomyślnie z chmury!");
             } catch (err) {
-                console.error("Błąd ładowania bazy danych:", err);
                 rfDatabase = {}; 
             }
         }
@@ -477,34 +826,17 @@
             try {
                 await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
                     method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Master-Key': API_KEY
-                    },
+                    headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
                     body: JSON.stringify(rfDatabase)
                 });
-                console.log("Baza danych została zsynchronizowana z chmurą.");
-            } catch (err) {
-                console.error("Błąd zapisu do chmury:", err);
-            }
+            } catch (err) {}
         }
 
         function expandLibrary() {
             document.getElementById('expandedLibrary').classList.remove('hidden');
             document.getElementById('expandedLibrary').classList.add('grid');
             document.getElementById('expandBtnContainer').classList.add('hidden');
-        }
-
-        function toggleTOS() {
-            const content = document.getElementById('tosContent');
-            const icon = document.getElementById('tosIcon');
-            if(content.classList.contains('hidden')) {
-                content.classList.remove('hidden');
-                icon.classList.remove('ph-caret-down'); icon.classList.add('ph-caret-up');
-            } else {
-                content.classList.add('hidden');
-                icon.classList.remove('ph-caret-up'); icon.classList.add('ph-caret-down');
-            }
+            setTimeout(reveal, 50); // animate new items
         }
 
         function openModal(title) {
@@ -536,7 +868,7 @@
         function closeModal() {
             const modal = document.getElementById('itemModal');
             modal.classList.add('opacity-0');
-            setTimeout(() => { modal.classList.add('hidden'); document.body.style.overflow = ''; }, 300);
+            setTimeout(() => { modal.classList.add('hidden'); document.body.style.overflow = ''; }, 400);
         }
 
         function resetModalView() {
@@ -545,24 +877,23 @@
         }
         
         async function processClientOrderClick() {
-            await loadDatabaseFromCloud(); 
-
-            const randomNumber = Math.floor(1000 + Math.random() * 9000);
-            const simplifiedAnimName = currentSelectedAnimId.replace(/\s+/g, '').toUpperCase();
-            const generatedKey = `RF-${randomNumber}-FULL-${simplifiedAnimName}`;
+            await loadDatabaseFromCloud();
+            const rand = Math.floor(1000 + Math.random() * 9000);
+            const simName = currentSelectedAnimId.replace(/\s+/g, '').toUpperCase();
+            const generatedKey = `RF-${rand}-${simName}`;
 
             rfDatabase[generatedKey] = { animName: currentSelectedAnimId, type: "FULL", used: false };
-            await saveDatabase(); 
+            await saveDatabase();
 
-            document.getElementById('successStateTitle').innerText = "Kod Wygenerowany!";
-            document.getElementById('successStateDesc').innerText = "Skopiuj poniższy jednorazowy kod i użyj go w sekcji 'Odbiór i Weryfikacja' na stronie głównej.";
+            document.getElementById('successStateTitle').innerText = "Wygenerowano";
+            document.getElementById('successStateDesc').innerText = "Przekaż poniższy kod administracji lub zachowaj.";
             document.getElementById('generatedCodeDisplay').innerText = generatedKey;
             
             document.getElementById('codeDisplayBox').classList.remove('hidden');
             document.getElementById('directDownloadBtn').classList.add('hidden');
             document.getElementById('discordButton').classList.remove('hidden');
 
-            sendDiscordWebhook(`🔥 **Nowe zamówienie od klienta!**\nProjekt: **${currentSelectedAnimId}**\nWygenerowany kod dostępu: \`${generatedKey}\``);
+            sendDiscordWebhook(`🔥 Nowe zamówienie: **${currentSelectedAnimId}**\nKod: \`${generatedKey}\``);
 
             document.getElementById('modalViewDetails').style.display = 'none';
             document.getElementById('modalViewCode').style.display = 'flex';
@@ -570,23 +901,20 @@
 
         async function processAdminCodeGeneration() {
             await loadDatabaseFromCloud();
-
-            const randomNumber = Math.floor(1000 + Math.random() * 9000);
-            const simplifiedAnimName = currentSelectedAnimId.replace(/\s+/g, '').toUpperCase();
-            const generatedKey = `RF-${randomNumber}-FULL-${simplifiedAnimName}`;
+            const rand = Math.floor(1000 + Math.random() * 9000);
+            const simName = currentSelectedAnimId.replace(/\s+/g, '').toUpperCase();
+            const generatedKey = `RF-${rand}-${simName}`;
 
             rfDatabase[generatedKey] = { animName: currentSelectedAnimId, type: "FULL", used: false };
             await saveDatabase();
 
-            document.getElementById('successStateTitle').innerText = "Kod Zapisany";
-            document.getElementById('successStateDesc').innerText = "Ten jednorazowy klucz jest aktywny w chmurze. Przekaż go klientowi.";
+            document.getElementById('successStateTitle').innerText = "Kod Gotowy";
+            document.getElementById('successStateDesc').innerText = "Przekaż kod klientowi.";
             document.getElementById('generatedCodeDisplay').innerText = generatedKey;
             
             document.getElementById('codeDisplayBox').classList.remove('hidden');
             document.getElementById('discordButton').classList.add('hidden');
             document.getElementById('directDownloadBtn').classList.add('hidden');
-
-            sendDiscordWebhook(`🛡️ **Admin wygenerował kod!** \`${generatedKey}\` dla animacji **${currentSelectedAnimId}**.`);
 
             document.getElementById('modalViewDetails').style.display = 'none';
             document.getElementById('modalViewCode').style.display = 'flex';
@@ -594,75 +922,59 @@
 
         async function adminGeneratePass() {
             await loadDatabaseFromCloud();
-
-            const rand = Math.floor(1000 + Math.random() * 9000);
-            const fullCode = `RF-${rand}-PASS`;
-
+            const fullCode = `RF-${Math.floor(1000 + Math.random() * 9000)}-PASS`;
             rfDatabase[fullCode] = { type: 'PASS', usesLeft: 3 };
             await saveDatabase();
-
             document.getElementById('adminResultText').innerText = fullCode;
             document.getElementById('adminResultBox').classList.remove('hidden');
-            sendDiscordWebhook(`🛡️ **Admin utworzył Event Pass!** Kod: \`${fullCode}\` (3 użycia).`);
         }
 
         async function processPassDownload() {
             if(!loggedInPassCode) return;
-            
             await loadDatabaseFromCloud();
 
             if(!rfDatabase[loggedInPassCode] || rfDatabase[loggedInPassCode].usesLeft <= 0) {
-                alert("Twój Event Pass został w pełni wykorzystany!");
+                alert("Twój Event Pass został wyczerpany.");
                 return;
             }
 
             rfDatabase[loggedInPassCode].usesLeft -= 1;
-            const remainingUses = rfDatabase[loggedInPassCode].usesLeft;
-            
+            const remaining = rfDatabase[loggedInPassCode].usesLeft;
             await saveDatabase();
             
-            document.getElementById('passUsesCount').innerText = remainingUses;
-
-            document.getElementById('successStateTitle').innerText = "Projekt Odblokowany!";
-            document.getElementById('successStateDesc').innerText = `Zabrano 1 użycie z Event Pass. Zostało Ci: ${remainingUses}`;
+            document.getElementById('passUsesCount').innerText = remaining;
+            document.getElementById('successStateTitle').innerText = "Odblokowano!";
+            document.getElementById('successStateDesc').innerText = `Zostało Ci ${remaining} użyć w Event Passie.`;
             
             const linkBtn = document.getElementById('directDownloadBtn');
-            // PODPIĘCIE LINKU DRIVE DLA EVENT PASSA
-            linkBtn.href = ANIMATION_DOWNLOAD_LINKS[currentSelectedAnimId] || DEFAULT_DRIVE_LINK;
+            linkBtn.href = ANIMATION_DOWNLOAD_LINKS[currentSelectedAnimId] || "#";
             
             document.getElementById('codeDisplayBox').classList.add('hidden');
             document.getElementById('discordButton').classList.add('hidden');
             linkBtn.classList.remove('hidden');
             linkBtn.classList.add('flex');
 
-            sendDiscordWebhook(`👑 **Użycie Event Pass!** Klient odblokował animację **${currentSelectedAnimId}**. Zostało użyć: ${remainingUses}.`);
-
             document.getElementById('modalViewDetails').style.display = 'none';
             document.getElementById('modalViewCode').style.display = 'flex';
 
-            if(remainingUses === 0) {
+            if(remaining === 0) {
                 setTimeout(() => {
                     loggedInPassCode = null;
                     document.getElementById('passBadge').classList.add('hidden');
-                    alert("Wykorzystałeś wszystkie 3 pobrania ze swojego Passa.");
-                }, 3000);
+                }, 2000);
             }
         }
 
         async function checkAccessCode() {
             const inputField = document.getElementById('accessCode');
             const code = inputField.value.trim().toUpperCase();
-            const errorElement = document.getElementById('codeError');
+            const errorEl = document.getElementById('codeError');
             
-            errorElement.classList.add('hidden');
+            errorEl.classList.add('hidden');
             document.getElementById('userDownloadContainer').classList.add('hidden');
             document.getElementById('passSuccessContainer').classList.add('hidden');
 
-            if(!code) {
-                errorElement.querySelector('span').innerText = "Wpisz kod!";
-                errorElement.classList.remove('hidden');
-                return;
-            }
+            if(!code) return;
 
             if(code === 'ADMINRF') {
                 isAdminLoggedIn = true;
@@ -672,51 +984,42 @@
                 return;
             }
 
-            errorElement.querySelector('span').innerText = "Weryfikacja w chmurze...";
-            errorElement.classList.remove('hidden');
-            
             await loadDatabaseFromCloud();
             
-            errorElement.classList.add('hidden');
-
             if(rfDatabase[code]) {
-                const sessionData = rfDatabase[code];
+                const session = rfDatabase[code];
                 
-                if(sessionData.type === 'PASS') {
-                    if(sessionData.usesLeft <= 0) {
-                        errorElement.querySelector('span').innerText = "Ten Event Pass wykorzystał już limit 3 pobrań.";
-                        errorElement.classList.remove('hidden');
+                if(session.type === 'PASS') {
+                    if(session.usesLeft <= 0) {
+                        errorEl.querySelector('span').innerText = "Limit Event Pass wyczerpany.";
+                        errorEl.classList.remove('hidden');
                         return;
                     }
                     loggedInPassCode = code;
                     document.getElementById('passBadge').classList.remove('hidden');
-                    document.getElementById('passUsesCount').innerText = sessionData.usesLeft;
+                    document.getElementById('passUsesCount').innerText = session.usesLeft;
                     document.getElementById('passSuccessContainer').classList.remove('hidden');
                     inputField.value = "";
                     return;
                 }
 
-                if(sessionData.used === true) {
-                    errorElement.querySelector('span').innerText = "Ten kod został już wykorzystany.";
-                    errorElement.classList.remove('hidden');
+                if(session.used) {
+                    errorEl.querySelector('span').innerText = "Kod został już użyty.";
+                    errorEl.classList.remove('hidden');
                     return;
                 }
 
-                sessionData.used = true;
+                session.used = true;
                 await saveDatabase();
 
-                document.getElementById('unlockedFileName').innerText = sessionData.animName;
-                // PODPIĘCIE LINKU DRIVE PO ODBIORZE KODEM
-                document.getElementById('downloadPayloadLink').href = ANIMATION_DOWNLOAD_LINKS[sessionData.animName] || DEFAULT_DRIVE_LINK;
-                
+                document.getElementById('unlockedFileNameText').innerText = session.animName;
+                document.getElementById('downloadPayloadLink').href = ANIMATION_DOWNLOAD_LINKS[session.animName] || "#";
                 document.getElementById('userDownloadContainer').classList.remove('hidden');
-                
-                sendDiscordWebhook(`✅ **Kod Zużyty!** Klient właśnie odebrał pliki do animacji **${sessionData.animName}** używając kodu \`${code}\`.`);
                 return;
             }
 
-            errorElement.querySelector('span').innerText = "Nieprawidłowy kod.";
-            errorElement.classList.remove('hidden');
+            errorEl.querySelector('span').innerText = "Nieprawidłowy kod.";
+            errorEl.classList.remove('hidden');
         }
     </script>
 </body>
