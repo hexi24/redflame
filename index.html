@@ -30,6 +30,9 @@
 
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Usuwanie domyślnej strzałki w znaczniku summary */
+        summary::-webkit-details-marker { display: none; }
 
         /* DELIKATNY CZERWONY GRADIENT W TLE */
         .ambient-glow {
@@ -337,11 +340,72 @@
 
             <div class="w-full md:w-80 flex flex-col p-8 bg-[#030303]/80 border border-white/10 rounded-3xl relative z-10 shadow-2xl backdrop-blur-xl text-center">
                 <div class="text-[10px] font-medium text-gray-500 uppercase tracking-widest mb-2">Cena pakietu</div>
-                <div class="text-5xl font-bold text-white mb-6 tracking-tight">50 <span class="text-xl text-gray-500 font-medium">PLN</span></div>
+                
+                <div class="flex justify-center items-center gap-3 mb-6 h-12">
+                    <div id="passOldPrice" class="text-5xl font-bold text-white tracking-tight transition-all duration-500 flex items-baseline gap-1 origin-right">
+                        <span>50</span><span class="text-xl text-gray-500 font-medium">PLN</span>
+                    </div>
+                    <div id="passNewPrice" class="hidden opacity-0 scale-50 transition-all duration-500 flex items-baseline gap-1 text-red-500 font-bold text-5xl tracking-tight origin-left">
+                        <span>45</span><span class="text-xl text-red-400/70 font-medium">PLN</span>
+                    </div>
+                </div>
+                
+                <div class="w-full relative mt-2 mb-4">
+                     <input type="text" id="passPromoInput" oninput="applyPromoCode(this.value, 'pass')" placeholder="Kod promocyjny (np. Jacapromo)" class="w-full bg-[#050505] border border-white/10 rounded-full px-4 py-2.5 text-xs text-center text-white focus:outline-none focus:border-red-500/50 transition-all placeholder:text-gray-600 uppercase">
+                </div>
+
                 <button onclick="document.getElementById('orders').scrollIntoView({behavior:'smooth'})" class="btn-primary w-full py-4 text-sm">
                     Kupuję dostęp
                 </button>
             </div>
+        </div>
+    </section>
+
+    <section id="faq" class="px-6 py-20 max-w-4xl mx-auto relative z-10 reveal">
+        <div class="mb-12 text-center">
+            <p class="mb-3 text-sm font-bold tracking-widest text-red-500 uppercase">FAQ</p>
+            <h2 class="text-3xl font-bold tracking-tight text-white md:text-4xl">Często zadawane <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">pytania</span></h2>
+        </div>
+        <div class="space-y-4">
+            <details class="group apple-glass border border-white/10 rounded-2xl bg-[#030303]/80 cursor-pointer">
+                <summary class="flex justify-between items-center font-medium list-none p-6 text-white text-sm md:text-base">
+                    <span>W jakim programie mogę edytować animacje MOGRT?</span>
+                    <span class="transition group-open:rotate-180"><i class="ph-bold ph-caret-down text-gray-500"></i></span>
+                </summary>
+                <div class="text-gray-400 text-sm px-6 pb-6 border-t border-white/5 pt-4 mt-2 leading-relaxed group-open:animate-fadeIn">
+                    Paczki MOGRT edytujesz bezpośrednio w programie <strong>Adobe Premiere Pro</strong> z poziomu panelu Essential Graphics (Podstawowe parametry grafiki). Nie musisz uruchamiać programu After Effects.
+                </div>
+            </details>
+
+            <details class="group apple-glass border border-white/10 rounded-2xl bg-[#030303]/80 cursor-pointer">
+                <summary class="flex justify-between items-center font-medium list-none p-6 text-white text-sm md:text-base">
+                    <span>Czy i gdzie mogę wpisać kod promocyjny?</span>
+                    <span class="transition group-open:rotate-180"><i class="ph-bold ph-caret-down text-gray-500"></i></span>
+                </summary>
+                <div class="text-gray-400 text-sm px-6 pb-6 border-t border-white/5 pt-4 mt-2 leading-relaxed group-open:animate-fadeIn">
+                    Oczywiście! Jeśli posiadasz kod od twórców (np. <strong>Jacapromo</strong>), podaj go administratorowi na naszym Discordzie podczas składania zamówienia, aby odebrać zniżkę na wybrane paczki lub Event Pass.
+                </div>
+            </details>
+
+            <details class="group apple-glass border border-white/10 rounded-2xl bg-[#030303]/80 cursor-pointer">
+                <summary class="flex justify-between items-center font-medium list-none p-6 text-white text-sm md:text-base">
+                    <span>Jak długo ważny jest mój klucz Event Pass?</span>
+                    <span class="transition group-open:rotate-180"><i class="ph-bold ph-caret-down text-gray-500"></i></span>
+                </summary>
+                <div class="text-gray-400 text-sm px-6 pb-6 border-t border-white/5 pt-4 mt-2 leading-relaxed group-open:animate-fadeIn">
+                    Kod Event Pass jest ważny przez <strong>30 dni</strong> od momentu aktywacji (pierwszego wpisania kodu na stronie). Pamiętaj, aby w tym czasie odblokować i pobrać przysługujące Ci 3 pliki z biblioteki.
+                </div>
+            </details>
+
+            <details class="group apple-glass border border-white/10 rounded-2xl bg-[#030303]/80 cursor-pointer">
+                <summary class="flex justify-between items-center font-medium list-none p-6 text-white text-sm md:text-base">
+                    <span>Co zrobić, jeśli paczka u mnie nie działa?</span>
+                    <span class="transition group-open:rotate-180"><i class="ph-bold ph-caret-down text-gray-500"></i></span>
+                </summary>
+                <div class="text-gray-400 text-sm px-6 pb-6 border-t border-white/5 pt-4 mt-2 leading-relaxed group-open:animate-fadeIn">
+                    Jeżeli napotkasz jakikolwiek problem techniczny (np. brakujący font, błędy odczytu), załóż ticket na naszym <strong>Discordzie</strong>. Administracja sprawnie Ci pomoże i pokaże, jak wdrożyć animacje krok po kroku.
+                </div>
+            </details>
         </div>
     </section>
 
@@ -386,6 +450,26 @@
         </div>
     </section>
 
+    <footer class="px-6 py-12 w-full mx-auto relative z-10 border-t border-white/5 mt-16 flex flex-col items-center">
+        <details class="group w-full max-w-3xl cursor-pointer">
+            <summary class="text-gray-500 text-xs uppercase tracking-widest font-semibold hover:text-white transition-colors list-none flex items-center justify-center gap-2">
+                Regulamin serwisu <i class="ph-bold ph-caret-down transition group-open:rotate-180"></i>
+            </summary>
+            <div class="mt-6 text-left text-xs text-gray-400 bg-[#050505]/80 p-6 md:p-8 border border-white/10 rounded-2xl apple-glass space-y-4 leading-relaxed cursor-auto group-open:animate-fadeIn">
+                <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-widest border-b border-white/10 pb-2">Regulamin i Warunki Korzystania</h4>
+                <p><strong class="text-gray-300">1. Postanowienia ogólne:</strong> Serwis redflame zajmuje się sprzedażą cyfrowych plików MOGRT do edycji wideo. Korzystanie ze strony oznacza akceptację regulaminu.</p>
+                <p><strong class="text-gray-300">2. Kody Promocyjne:</strong> Kody promocyjne takie jak <span class="text-red-400 font-bold">Jacapromo</span> można zrealizować podając je przy zakupie przez Discord lub we wskazanym miejscu na stronie. Zniżki i kody nie łączą się.</p>
+                <p><strong class="text-gray-300">3. Prawa autorskie:</strong> Zakup animacji upoważnia do jej użycia w swoich projektach (również komercyjnych na platformach typu YouTube czy Twitch). Bezwzględnie zabrania się odsprzedaży i udostępniania surowych plików MOGRT osobom trzecim.</p>
+                <p><strong class="text-gray-300">4. Zwroty:</strong> Zgodnie z art. 38 Prawa Konsumenckiego, ze względu na cyfrowy charakter towaru, po zrealizowaniu klucza aktywacyjnego i pobraniu pliku, konsument traci prawo do zwrotu.</p>
+                <p><strong class="text-gray-300">5. Kontakt:</strong> W sprawach technicznych, błędach z paczkami oraz pytaniach dotyczących zamówień, zapraszamy na nasz dedykowany serwer Discord.</p>
+            </div>
+        </details>
+        
+        <div class="text-gray-600 text-[10px] uppercase tracking-widest mt-8 flex flex-col items-center gap-1 text-center">
+            <span>&copy; 2026 redflame. Wszelkie prawa zastrzeżone.</span>
+        </div>
+    </footer>
+
     <div id="itemModal" class="fixed inset-0 z-[150] flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-400">
         <div class="absolute inset-0 bg-black/60 backdrop-blur-md transition-opacity" onclick="closeModal()"></div>
         <div class="w-full max-w-3xl flex flex-col md:flex-row relative modal-scale-enter overflow-hidden apple-glass shadow-2xl">
@@ -404,10 +488,18 @@
                     <p id="modalDesc" class="text-gray-400 text-sm mb-8 leading-relaxed">Paczka zawierająca w pełni edytowalne pliki projektu...</p>
 
                     <div id="clientPurchasePanel" class="flex flex-col flex-1 mt-auto">
-                        <div class="flex justify-between items-center bg-black/40 rounded-xl p-4 border border-white/5 mb-4 backdrop-blur-sm">
+                        <div class="flex justify-between items-center bg-black/40 rounded-xl p-4 border border-white/5 mb-3 backdrop-blur-sm">
                             <div><div class="text-sm font-semibold text-white">Zakup dożywotni</div><div class="text-[10px] text-gray-500 uppercase tracking-widest">Pełna Licencja</div></div>
-                            <div class="text-xl font-bold text-white">20 PLN</div>
+                            <div class="flex items-center gap-2 h-8">
+                                <div id="singleOldPrice" class="text-xl font-bold text-white transition-all duration-500 origin-right">20 PLN</div>
+                                <div id="singleNewPrice" class="hidden opacity-0 scale-50 text-xl font-bold text-red-500 transition-all duration-500 origin-left">18 PLN</div>
+                            </div>
                         </div>
+                        
+                        <div class="w-full relative mb-4">
+                            <input type="text" id="singlePromoInput" oninput="applyPromoCode(this.value, 'single')" placeholder="Kod promocyjny (np. Jacapromo)" class="w-full bg-[#050505] border border-white/10 rounded-lg px-4 py-2.5 text-xs text-center text-white focus:outline-none focus:border-red-500/50 transition-all placeholder:text-gray-600 uppercase">
+                        </div>
+
                         <button onclick="processClientOrderClick()" class="btn-primary w-full py-4 text-sm">ZAMAWIAM PROJEKT</button>
                     </div>
 
@@ -436,12 +528,65 @@
 
     <script>
         // =========================================================
+        // LOGIKA KODÓW PROMOCYJNYCH (10% ZNIŻKI)
+        // =========================================================
+        const PROMO_CODES = {
+            "JACAPROMO": 0.10 // 10%
+        };
+
+        function applyPromoCode(code, type) {
+            const cleanCode = code.trim().toUpperCase();
+            const discount = PROMO_CODES[cleanCode] || 0;
+
+            const oldPriceEl = document.getElementById(`${type}OldPrice`);
+            const newPriceEl = document.getElementById(`${type}NewPrice`);
+
+            if (discount > 0) {
+                const basePrice = type === 'pass' ? 50 : 20;
+                const newPriceValue = basePrice * (1 - discount);
+
+                // Zależnie czy to Event Pass (wielki tekst) czy Modal (mały tekst)
+                if(type === 'pass') {
+                    oldPriceEl.classList.remove('text-5xl', 'text-white');
+                    oldPriceEl.classList.add('text-2xl', 'text-gray-500', 'line-through', 'opacity-50');
+                    newPriceEl.querySelector('span:first-child').innerText = newPriceValue.toFixed(0);
+                } else {
+                    oldPriceEl.classList.remove('text-xl', 'text-white');
+                    oldPriceEl.classList.add('text-sm', 'text-gray-500', 'line-through', 'opacity-50');
+                    newPriceEl.innerText = `${newPriceValue.toFixed(0)} PLN`;
+                }
+                
+                // Animacja wejścia nowej ceny
+                newPriceEl.classList.remove('hidden');
+                setTimeout(() => {
+                    newPriceEl.classList.remove('opacity-0', 'scale-50');
+                    newPriceEl.classList.add('opacity-100', 'scale-100');
+                }, 10);
+            } else {
+                // Cofanie zmiany (jeśli wpiszesz zły kod lub skasujesz)
+                if(type === 'pass') {
+                    oldPriceEl.classList.add('text-5xl', 'text-white');
+                    oldPriceEl.classList.remove('text-2xl', 'text-gray-500', 'line-through', 'opacity-50');
+                } else {
+                    oldPriceEl.classList.add('text-xl', 'text-white');
+                    oldPriceEl.classList.remove('text-sm', 'text-gray-500', 'line-through', 'opacity-50');
+                }
+                
+                newPriceEl.classList.remove('opacity-100', 'scale-100');
+                newPriceEl.classList.add('opacity-0', 'scale-50');
+                setTimeout(() => {
+                    // Sprawdzamy czy w miedzyczasie ktoś nie wpisal znowu dobrego kodu
+                    if(!PROMO_CODES[document.getElementById(`${type}PromoInput`).value.trim().toUpperCase()]) {
+                        newPriceEl.classList.add('hidden');
+                    }
+                }, 300);
+            }
+        }
+
+
+        // =========================================================
         // 🛠️ TUTAJ KONFIGURUJESZ LOGA TWÓRCÓW I SWOJE PLIKI WIDEO
         // =========================================================
-
-        // 1. ZMIANA LOGO TWÓRCÓW
-        // 'img' to ścieżka do pliku. Np. "avatary/dranczips.png"
-        // Jeśli pliku nie ma, wgra się domyślny awatar
         const creatorsData = [
             { name: "Dranczips", subs: "117K Subskrypcji", img: "avatary/dranczips.png" },
             { name: "ManFelt", subs: "46K Subskrypcji", img: "avatary/manfelt.png" },
@@ -452,8 +597,6 @@
             { name: "Dranhis", subs: "29K Subskrypcji", img: "avatary/dranhis.png" }
         ];
 
-        // 2. PODPIĘCIE WIDEO DO ANIMACJI W BIBLIOTECE
-        // 'video' to ścieżka do Twojego mp4, np. "animacje/animacja1.mp4"
         const libraryData = [
             { title: "Wejście na serwer", desc: "Podstawowy alert i wejście.", video: "animwejscienaserwer.mp4" }, 
             { title: "Animacja 3 Map", desc: "Przejścia dla trzech ekranów.", video: "animacja 3 map.mp4" },
@@ -466,14 +609,12 @@
             { title: "Esports Logo Reveal", desc: "Wyjazd logo drużyny esportowej.", video: "animacje/animacja9.mp4" }
         ];
 
-        // Generator paska Twórców
         function initCreators() {
             const marquee1 = document.getElementById('creatorsMarquee1');
             const marquee2 = document.getElementById('creatorsMarquee2');
             let htmlStr = "";
             
             creatorsData.forEach(c => {
-                // Jeśli nie znajdzie pliku png, ładuje domyślną ikonkę DiceBear żeby strona się nie sypała
                 const fallbackImg = `https://api.dicebear.com/7.x/avataaars/svg?seed=${c.name}&backgroundColor=2b2b2b`;
                 htmlStr += `
                 <div class="flex items-center gap-3 bg-[#0a0a0a]/80 border border-white/10 rounded-full pl-2 pr-6 py-2 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:border-red-500/30 hover:bg-[#111] transition-colors">
@@ -489,7 +630,6 @@
             marquee2.innerHTML = htmlStr;
         }
 
-        // Generator Biblioteki z dodanymi plikami Video
         function initLibrary() {
             const gridMain = document.getElementById('mainGrid');
             const gridExpanded = document.getElementById('expandedLibrary');
@@ -498,7 +638,6 @@
             gridExpanded.innerHTML = "";
             
             libraryData.forEach((item, index) => {
-                // Video odtwarza się w tle. onerror ukrywa wideo, jeśli nie wgrasz pliku mp4 na serwer
                 const cardHTML = `
                     <div class="apple-glass apple-glass-hover overflow-hidden group cursor-pointer flex flex-col" onclick="openModal('${item.title}', '${item.desc}', '${item.video}')">
                         <div class="w-full aspect-video bg-[#050505] relative overflow-hidden flex items-center justify-center border-b border-white/5">
@@ -607,7 +746,6 @@
             setTimeout(reveal, 50); 
         }
 
-        // Zaktualizowano openModal tak, by przyjmowało video i ustawiało je w popupie
         function openModal(title, desc, videoPath) {
             currentSelectedAnimId = title; 
             document.getElementById('modalTitle').innerText = title;
@@ -619,6 +757,10 @@
 
             document.getElementById('modalViewDetails').style.display = 'flex';
             document.getElementById('modalViewCode').style.display = 'none';
+
+            // Reset kodu promocyjnego w modalu przy każdym otwarciu
+            document.getElementById('singlePromoInput').value = '';
+            applyPromoCode('', 'single');
 
             const pClient = document.getElementById('clientPurchasePanel');
             const pAdmin = document.getElementById('adminGeneratePanel');
@@ -644,11 +786,10 @@
             setTimeout(() => { 
                 modal.classList.add('hidden'); 
                 document.body.style.overflow = ''; 
-                vidPlayer.src = ""; // Stop video w tle
+                vidPlayer.src = ""; 
             }, 400);
         }
 
-        // --- RESZTA FUNKCJI LOGIKI PLATNOSCI I ADMINA BEZ ZMIAN ---
         async function processClientOrderClick() {
             await loadDatabaseFromCloud();
             const rand = Math.floor(1000 + Math.random() * 9000);
